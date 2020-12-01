@@ -30,11 +30,20 @@ def morn_register(request):
 @api_view(['POST', 'GET'])
 def morn_login(request):
     if request.method == 'GET':
-        token = request.POST['token']
+        token = request.GET['token']
         try:
             info = jwt.decode(token, salt, True, algorithm='HS256')
-            return Response('ok')
-        except:
+            username = info['username']
+            password = info['password']
+            user = User.objects.filter(username=username)
+            if user:
+                checkPwd = check_password(password, user[0].password)
+                if checkPwd:
+                    return Response('ok')
+            return Response('error')
+        except Exception as e:
+            print(e)
+            
             return Response('error')
     username = request.POST['username']
     password = request.POST['password']
