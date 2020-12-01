@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Qs from 'qs'
 
 export default {
     name: "SignUp",
@@ -79,24 +77,8 @@ export default {
                 alert('密码不能小于8位数')
                 return
             }
-            axios({
-                url:'http://127.0.0.1:9000/api/morn-register/',
-                method:'post',
-                data:Qs.stringify({
-                    username:this.userInfo.username,
-                    password:this.userInfo.password
-                })
-            }).then((res)=> {
-                // console.log(res)
-                if(res.data == 'repeat'){
-                    alert('用户名已存在！')
-                    return
-                }
-                // 写跳转链接
-                alert('注册成功!')
-                
-            })
-            
+            this.$store.dispatch('signUp', this.userInfo)
+            this.$router.push({path: '/'})
         },
         handleClickRegister(){
             this.hasThisUser = !this.hasThisUser
