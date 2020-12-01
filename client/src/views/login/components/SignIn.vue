@@ -36,8 +36,6 @@
 
 <script>
 // @ is an alias to /src
-import Qs from 'qs'
-import axios from 'axios'
 export default {
   name: "SignIn",
   props: {
@@ -48,6 +46,7 @@ export default {
       userInfo: {
         username: "",
         password: "",
+        token: ""
       },
       hasThisUser: this.hasUser,
     };
@@ -58,27 +57,9 @@ export default {
         alert("输入内容不能为空！");
         return;
       }
-      axios({
-        url: "http://127.0.0.1:9000/api/morn-login/",
-        method: "post",
-        data: Qs.stringify({
-          username: this.userInfo.username,
-          password: this.userInfo.password,
-        }),
-      }).then((res) => {
-        console.log(res.data);
-        if(res.data == 'nouser'){
-            alert('用户名不存在')
-            return
-        }
-        if(res.data == 'pwderr'){
-            alert('密码错误')
-            return
-        }
-        // 写跳转链接
-        alert('登录成功！')
-        console.log(1);
-      });
+      console.log(this.userInfo);
+      this.$store.dispatch('signIn', this.userInfo)
+      this.$router.push({path: '/'})
     },
     handleClickRegister() {
       this.hasThisUser = !this.hasThisUser;

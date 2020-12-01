@@ -3,7 +3,13 @@
         <router-view />
     </div>
 </template>
-
+<script>
+export default {
+    created() {
+        this.$store.dispatch('tryAutoLogin')
+    },
+}
+</script>
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
