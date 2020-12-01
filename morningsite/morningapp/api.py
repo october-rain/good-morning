@@ -30,7 +30,7 @@ def morn_register(request):
 @api_view(['POST', 'GET'])
 def morn_login(request):
     if request.method == 'GET':
-        token = request.POST['token']
+        token = request.GET['token']
         try:
             info = jwt.decode(token, salt, True, algorithm='HS256')
             return Response('ok')
