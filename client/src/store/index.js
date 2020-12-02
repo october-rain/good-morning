@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         userInfo: {
-            username: '',
+            // username: '',
             token: ''
         }
     },
@@ -37,7 +37,7 @@ export default new Vuex.Store({
                 // 写跳转链接
                 userInfo.token = res.data
                 console.log(userInfo);
-                commit('changeLoginUserInfo', userInfo)
+                commit('changeLoginUserInfo', userInfo.token)
                 // 缓存
                 localStorage.setItem('token', res.data)
                 alert('登录成功！')
@@ -56,7 +56,7 @@ export default new Vuex.Store({
                 }
                 // 写跳转链接
                 userInfo.token = res.data
-                commit('changeLoginUserInfo', userInfo)
+                commit('changeLoginUserInfo', userInfo.token)
                 // 缓存
                 localStorage.setItem('token', res.data)
                 alert('注册成功!')
@@ -79,17 +79,14 @@ export default new Vuex.Store({
                         alert('用户登陆过期，请重新登陆')
                         return
                     }
-                    commit("changeLoginUserInfo", res.data);
-                    // 缓存
-                    localStorage.setItem('token', res.data)
+                    commit('changeLoginUserInfo', token)
                 })
             }
         }
     },
     mutations: {
-        changeLoginUserInfo(state, userInfo) {
-            state.userInfo.username = userInfo.username
-            state.userInfo.token = userInfo.token
+        changeLoginUserInfo(state, token) {
+            state.userInfo.token = token
             // console.log(state.userInfo.token);
         },
         clearUserInfo(state){

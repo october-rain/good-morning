@@ -19,6 +19,7 @@ export default {
     computed: {
         // 验证用户是否登陆，登陆在homeHeader里显示“登出”
         authUserLogin(){
+            console.log('authUserLogin',this.$store.getters.isUserLogin);
             return this.$store.getters.isUserLogin ? true : false
         }
     },
