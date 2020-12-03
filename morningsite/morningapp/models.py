@@ -18,7 +18,7 @@ class Userinfo(models.Model):
 class Profile(models.Model):
     userID = models.AutoField(primary_key=True)
     nickname = models.CharField(max_length=25, blank=True)
-    headimg = models.CharField(max_length=200, blank=True)
+    headimg = models.CharField(max_length=200, default='http://127.0.0.1:9000/upload/headDefaultImg.jpeg/')
     sex = models.CharField(max_length=4, blank=True)
     birth = models.DateField(blank=True,null=True)
     age = models.CharField(max_length=4, blank=True)
@@ -48,6 +48,7 @@ class Article(models.Model):
     cover = models.CharField(null=True, blank=True, max_length=300)
     describe = models.CharField(null=True, blank=True, max_length=200)
     content = models.TextField()
+    birth = models.DateField(blank=True,null=True)
     belong = models.ForeignKey(
         Userinfo, on_delete=models.CASCADE, blank=True, related_name='article_user')
 
