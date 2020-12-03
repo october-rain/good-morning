@@ -16,11 +16,11 @@ export default {
     name: "MainBody",
     data() {
         return {
+            content: "### 标题",
             article: this.$store.state.article,
-            content: "### 标题"
         }
     },
-    created() {
+    mounted() {
         this.markdownRender()
     },
     methods: {
@@ -36,6 +36,9 @@ export default {
                 smartypants: false,
                 xhtml: false,
             })
+            
+            this.article = this.$store.state.article
+            console.log("this.article",this.article)
             this.content = marked(this.article.content)
             // console.log(this.content);
         },

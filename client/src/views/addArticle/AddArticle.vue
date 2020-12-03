@@ -1,7 +1,7 @@
 <template>
     <div class="addArticle">
         <input type="text" placeholder="标题" v-model="articleInfo.title" />
-        <input type="text" placeholder="描述" v-model="articleInfo.desc" />
+        <input type="text" placeholder="描述" v-model="articleInfo.describe" />
         <mark-down-editor @add="addContent"></mark-down-editor>
         <div class="button" @click="Submit">提交</div>
     </div>
@@ -20,8 +20,9 @@ export default {
             submitAble: true, // 是否能够发送，发送不能过快
             articleInfo: {
                 title: "",
-                desc: "",
+                describe: "",
                 content: "",
+                cover: ""
             },
         }
     },
@@ -40,7 +41,7 @@ export default {
                 setTimeout(() => {
                     this.submitAble = true
                 }, 2000)
-                if (!this.articleInfo.title || !this.articleInfo.desc) {
+                if (!this.articleInfo.title || !this.articleInfo.describe) {
                     alert("请输入标题和描述")
                 } else if (!this.articleInfo.content) {
                     alert("请输入文章")
