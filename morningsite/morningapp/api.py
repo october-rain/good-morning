@@ -128,6 +128,44 @@ def add_article(request):
     return Response('ok')
 
 
+
+# 获取文章列表
+@api_view(['GET'])
+def get_articlelist(request):
+    article = Article.objects.all()
+    article_list = []
+    num = 0
+    for item in article:
+        article_data = {
+            'id':item.article_id,
+            'title':item.title,
+            'cover':item.cover,
+            'birth':item.birth,
+            'author':item.belong.username
+        }
+        num = num + 1 
+        article_list.append(article_data)
+    data = {
+        'num':num,
+        'article_list':article_list,
+    }
+    return Response(data)
+# 获取文章
+@api_view(['GET'])
+def get_article(request):
+    article_id = request.GET['id']
+    try:
+        article_id = int(article_id)
+        article = Article.objects.filter(article_id = article_id)
+        if article:
+            data = {
+                'content':article[0].content
+            }
+            return Response(data)
+        else :
+            return Response('no article')
+    except Exception as e:
+        return Response('error')
 # 生成jwtoken
 def create_token(username):
     headers = {
@@ -146,7 +184,6 @@ def create_token(username):
     token = jwt.encode(headers=headers, payload=payload,
                        key=salt, algorithm='HS256').decode('utf-8')
     return token
-
 
 # token解码
 def decode_token(token):

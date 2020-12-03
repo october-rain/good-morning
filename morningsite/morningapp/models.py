@@ -44,6 +44,7 @@ class Contact(models.Model):
         return self.userID
 # 文章
 class Article(models.Model):
+    article_id = models.AutoField(primary_key=True)
     title = models.CharField(null=True, blank=True, max_length=80)
     cover = models.CharField(null=True, blank=True, max_length=300)
     describe = models.CharField(null=True, blank=True, max_length=200)
