@@ -46,10 +46,10 @@ class Contact(models.Model):
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
     title = models.CharField(null=True, blank=True, max_length=80)
-    cover = models.CharField(null=True, blank=True, max_length=300)
+    cover = models.CharField(null=True, blank=True, max_length=300,default='http://127.0.0.1:9000/upload/pic.png')
     describe = models.CharField(null=True, blank=True, max_length=200)
     content = models.TextField()
-    birth = models.DateField(blank=True,null=True)
+    createtime = models.DateField(blank=True,null=True)
     belong = models.ForeignKey(
         Userinfo, on_delete=models.CASCADE, null=True,blank=True, related_name='article_user')
 

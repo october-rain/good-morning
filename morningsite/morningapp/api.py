@@ -140,7 +140,8 @@ def get_articlelist(request):
             'id':item.article_id,
             'title':item.title,
             'cover':item.cover,
-            'birth':item.birth,
+            'time':item.createtime,
+            'desc':item.describe,
             'author':item.belong.username
         }
         num = num + 1 
