@@ -5,9 +5,8 @@
             <div class="article">全部</div>
             <div class="rain">十雨</div>
             <div class="about">关于十雨</div>
-            <div class="login">
-                <router-link to="/login">登陆</router-link>
-            </div>
+            <div class="login" v-if="!authUserLogin" @click="triggerPage('/login')">登陆</div>
+            <div class="logout" v-else @click="triggerPage('logout')">登出</div>
         </div>
     </div>
 </template>
@@ -17,6 +16,25 @@
 
 export default {
     name: "HomeInfo",
+    computed: {
+        // 验证用户是否登陆，登陆在homeHeader里显示“登出”
+        authUserLogin(){
+            return this.$store.getters.isUserLogin ? true : false
+        }
+    },
+    methods: {
+        triggerPage(path){
+            // this.LoginOrLogout = !this.authUserLogin
+            // console.log(this.LoginOrLogout);
+            if (path === "logout") {
+                this.$store.dispatch("logout")
+                // this.$store.commit('clearUserInfo')
+                // this.$message.success("登出成功")
+            } else {
+                this.$router.push(path)
+            }
+        },
+    },
 }
 </script>
 
