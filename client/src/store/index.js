@@ -7,10 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        userInfo: {
-            // username: '',
-            token: "",
-        },
+        userInfo: {},
         articleList: [],
     },
     getters: {
@@ -34,13 +31,10 @@ export default new Vuex.Store({
                     alert("密码错误")
                     return
                 }
-                // 写跳转链接
-                // userInfo.token = res.data.token
-                // console.log("userInfo", userInfo)
                 commit("changeLoginUserInfo", res.data)
                 // 缓存
                 localStorage.setItem("token", res.data.token)
-                console.log("res.data.token",res.data.token)
+                // console.log("res",res);
                 alert("登录成功！")
             })
         },
@@ -56,7 +50,6 @@ export default new Vuex.Store({
                     return
                 }
                 // 写跳转链接
-                userInfo = res.data
                 commit("changeLoginUserInfo", res.data)
                 // 缓存
                 localStorage.setItem("token", res.data.token)
@@ -70,7 +63,7 @@ export default new Vuex.Store({
         },
         tryAutoLogin({ commit }) {
             let token = localStorage.getItem("token")
-            console.log("token", token)
+            // console.log("token", token)
             if (token) {
                 axios({
                     url: "http://127.0.0.1:9000/api/morn-login/",
@@ -78,12 +71,13 @@ export default new Vuex.Store({
                     // data: Qs.stringify({token})
                     params: { token },
                 }).then((res) => {
-                    console.log("自动登陆返回信息", res)
+                    // console.log("自动登陆返回信息", res)
                     if (res.data == "error") {
                         alert("用户登陆过期，请重新登陆")
                         return
                     }
-                    commit("changeLoginUserInfo", token)
+                    // console.log("res",res)
+                    commit("changeLoginUserInfo", res.data)
                 })
             }
         },
@@ -107,16 +101,14 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        changeLoginUserInfo(state, token) {
-            state.userInfo.token = token
-            // console.log(state.userInfo.token);
+        changeLoginUserInfo(state, userInfo) {
+            // state.userInfo.token = userInfo.token
+            state.userInfo = userInfo
+            // console.log("state.userInfo", state.userInfo);
         },
         clearUserInfo(state) {
             localStorage.setItem("token", "")
-            state.userInfo = {
-                username: "",
-                token: "",
-            }
+            state.userInfo = {}
         },
         setArticleListInfo(state, articleList) {
             state.articleList = articleList
