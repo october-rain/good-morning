@@ -7,8 +7,7 @@ from morningapp.model_data import model_data
 from bs4 import BeautifulSoup
 import random
 import jwt
-import time
-
+import time,datetime
 # token密钥
 salt = "dyxzdh"
 
@@ -47,15 +46,12 @@ def morn_register(request):
     return Response(data)
 
 # 登录
-
-
 @api_view(['POST', 'GET'])
 def morn_login(request):
     if request.method == 'GET':
         token = request.GET['token']
         try:
-            info = jwt.decode(token, salt, True, algorithm='HS256')
-            username = info['username']
+            username = decode_token(token)
             user = Userinfo.objects.filter(username=username)
             if user:
                 pass
@@ -63,7 +59,6 @@ def morn_login(request):
                 return Response('error')
         except Exception as e:
             print(e)
-
             return Response('error')
     else:
         username = request.POST['username']
@@ -100,6 +95,39 @@ def morn_login(request):
     return Response(data)
 
 
+
+# 保存文章
+@api_view(['POST'])
+def add_article(request):
+    token = request.POST['token']
+    try:
+        username = decode_token(token)
+        user = Userinfo.objects.filter(username=username)
+        if user:
+            user = user[0]
+        else :
+            return Response('error')
+    except Exception as e:
+        print(e)
+        return Response('error')
+    title = request.POST['title']
+    describe = request.POST['describe']
+    cover = request.POST['cover']
+    content = request.POST['content']
+    rep_title = Article.objects.filter(title=title)
+    if rep_title:
+        return Response('repeat')
+    # 保存文章
+    new_article = Article(title=title)
+    new_article.content = content
+    new_article.describe = describe
+    new_article.cover = cover
+    new_article.birth = datetime.date.today()
+    new_article.belong = user
+    new_article.save()
+    return Response('ok')
+
+
 # 生成jwtoken
 def create_token(username):
     headers = {
@@ -119,59 +147,9 @@ def create_token(username):
                        key=salt, algorithm='HS256').decode('utf-8')
     return token
 
-# 保存文章
 
-
-@api_view(['POST'])
-def add_article(request):
-    title = request.POST['title']
-    describe = request.POST['describe']
-    cover = request.POST['cover']
-    content = request.POST['content']
-    rep_title = Article.objects.filter(title=title)
-    if rep_title:
-        return Response('repeat')
-    # 保存文章
-    new_article = Article(title=title)
-    # 解析富文本html文档
-    # soup = BeautifulSoup(content, 'html.parser')
-    # # 获取所有img标签 图片
-    # imgList = soup.find_all('img')
-    # for img in range(0, len(imgList)):
-    #     src = imgList[img]['src']
-    #     # print(imgList[img]['src'])
-    #     # 判断图片是远程还是本地
-    #     if 'http://' in src or 'https://' in src:
-    #         # 请求远程图片
-    #         image = requests.get(src)
-    #         # 转化为二进制
-    #         image_data = Image.open(BytesIO(image.content))
-    #         # print(image_data)
-    #         # 设定文件名称
-    #         image_name = datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '-' + \
-    #             str(new_article.id) + '-' + str(img)
-    #         image_data.save("upload/"+image_name+".png")
-    #         new_src = hostURL + 'upload/' + image_name + '.png'
-    #         content = content.replace(src, new_src)
-    #         # 封面设定
-    #         if cover == src:
-    #             cover = new_src
-    #     else:
-    #         image_data = base64.b64decode(src.split(',')[1])
-    #         image_name = datetime.datetime.now().strftime('%Y%m%d%H%M%S') + '-' + str(new_article.id) + \
-    #             '-' + str(img) + '.' + \
-    #             src.split(',')[0].split('/')[1].split(';')[0]
-    #         image_url = os.path.join('upload', image_name).replace('\\', '/')
-    #         with open(image_url, 'wb') as f:
-    #             f.write(image_data)
-    #         new_src = hostURL + image_url
-    #         content = content.replace(src, new_src)
-    #         # 封面设定
-    #         if cover == src:
-
-    #             cover = new_src
-    new_article.content = content
-    new_article.describe = describe
-    new_article.cover = cover
-    new_article.save()
-    return Response('ok')
+# token解码
+def decode_token(token):
+    info = jwt.decode(token, salt, True, algorithm='HS256')
+    username = info['username']
+    return username

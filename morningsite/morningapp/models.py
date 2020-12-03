@@ -12,7 +12,7 @@ class Userinfo(models.Model):
     def save(self, *args, **kwargs):
         self.password = make_password(self.password, None, 'pbkdf2_sha256')
         super(Userinfo, self).save(*args, **kwargs)
-    def __unicode__(self):
+    def __str__(self):
         return self.username
 # 用户信息表
 class Profile(models.Model):
@@ -28,7 +28,7 @@ class Profile(models.Model):
     belong = models.OneToOneField(
         Userinfo, on_delete=models.CASCADE, blank=True)
     def __int__(self):
-        self.userID
+        return self.userID
 
 # 联系方式表
 class Contact(models.Model):
@@ -41,7 +41,7 @@ class Contact(models.Model):
     belong = models.OneToOneField(
         Userinfo, on_delete=models.CASCADE, blank=True)
     def __int__(self):
-        self.userID
+        return self.userID
 # 文章
 class Article(models.Model):
     title = models.CharField(null=True, blank=True, max_length=80)
@@ -50,10 +50,10 @@ class Article(models.Model):
     content = models.TextField()
     birth = models.DateField(blank=True,null=True)
     belong = models.ForeignKey(
-        Userinfo, on_delete=models.CASCADE, blank=True, related_name='article_user')
+        Userinfo, on_delete=models.CASCADE, null=True,blank=True, related_name='article_user')
 
     def __str__(self):
-        self.title
+        return self.title
 
 
 
