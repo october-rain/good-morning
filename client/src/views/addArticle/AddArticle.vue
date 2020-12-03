@@ -22,7 +22,8 @@ export default {
                 title: "",
                 describe: "",
                 content: "",
-                cover: ""
+                cover: "",
+                token: ""
             },
         }
     },
@@ -34,6 +35,7 @@ export default {
             // console.log(content)
             this.articleInfo.content = content
             // console.log(this.articleInfo);
+            this.articleInfo.token = localStorage.getItem("token")
         },
         Submit() {
             if (this.submitAble) {

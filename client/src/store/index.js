@@ -12,7 +12,6 @@ export default new Vuex.Store({
             token: "",
         },
         articleList: [],
-        article: {},
     },
     getters: {
         isUserLogin(state) {
@@ -27,7 +26,6 @@ export default new Vuex.Store({
                 method: "post",
                 data: Qs.stringify(userInfo),
             }).then((res) => {
-                console.log(res.data)
                 if (res.data == "nouser") {
                     alert("用户名不存在")
                     return
@@ -37,11 +35,12 @@ export default new Vuex.Store({
                     return
                 }
                 // 写跳转链接
-                userInfo.token = res.data
-                console.log(userInfo)
-                commit("changeLoginUserInfo", userInfo.token)
+                // userInfo.token = res.data.token
+                // console.log("userInfo", userInfo)
+                commit("changeLoginUserInfo", res.data)
                 // 缓存
-                localStorage.setItem("token", res.data)
+                localStorage.setItem("token", res.data.token)
+                console.log("res.data.token",res.data.token)
                 alert("登录成功！")
             })
         },
@@ -57,10 +56,12 @@ export default new Vuex.Store({
                     return
                 }
                 // 写跳转链接
-                userInfo.token = res.data
-                commit("changeLoginUserInfo", userInfo.token)
+                userInfo = res.data
+                commit("changeLoginUserInfo", res.data)
                 // 缓存
-                localStorage.setItem("token", res.data)
+                localStorage.setItem("token", res.data.token)
+                console.log("res.data.token",res.data.token)
+                // console.log("res",res);
                 alert("注册成功!")
             })
         },
@@ -69,6 +70,7 @@ export default new Vuex.Store({
         },
         tryAutoLogin({ commit }) {
             let token = localStorage.getItem("token")
+            console.log("token", token)
             if (token) {
                 axios({
                     url: "http://127.0.0.1:9000/api/morn-login/",
@@ -110,6 +112,7 @@ export default new Vuex.Store({
             // console.log(state.userInfo.token);
         },
         clearUserInfo(state) {
+            localStorage.setItem("token", "")
             state.userInfo = {
                 username: "",
                 token: "",
