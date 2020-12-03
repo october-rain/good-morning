@@ -2463,6 +2463,18 @@ coa@^2.0.2:
     chalk "^2.4.1"
     q "^1.1.2"
 
+codemirror-spell-checker@*:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/codemirror-spell-checker/download/codemirror-spell-checker-1.1.2.tgz#1c660f9089483ccb5113b9ba9ca19c3f4993371e"
+  integrity sha1-HGYPkIlIPMtRE7m6nKGcP0mTNx4=
+  dependencies:
+    typo-js "*"
+
+codemirror@*:
+  version "5.58.3"
+  resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.58.3.tgz?cache=0&sync_timestamp=1605775229112&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcodemirror%2Fdownload%2Fcodemirror-5.58.3.tgz#3f0689854ecfbed5d4479a98b96148b2c3b79796"
+  integrity sha1-PwaJhU7PvtXUR5qYuWFIssO3l5Y=
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/collection-visit/download/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -4074,6 +4086,11 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+github-markdown-css@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npm.taobao.org/github-markdown-css/download/github-markdown-css-4.0.0.tgz#be9f4caf7a389228d4c368336260ffc909061f35"
+  integrity sha1-vp9Mr3o4kijUw2gzYmD/yQkGHzU=
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/glob-parent/download/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -4283,7 +4300,7 @@ hex-color-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/hex-color-regex/download/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
 
-highlight.js@^10.0.0:
+highlight.js@^10.0.0, highlight.js@^10.4.0:
   version "10.4.0"
   resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-10.4.0.tgz#ef3ce475e5dfa7a48484260b49ea242ddab823a0"
   integrity sha1-7zzkdeXfp6SEhCYLSeokLdq4I6A=
@@ -5272,6 +5289,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+marked@*:
+  version "1.2.5"
+  resolved "https://registry.npm.taobao.org/marked/download/marked-1.2.5.tgz?cache=0&sync_timestamp=1605794811098&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmarked%2Fdownload%2Fmarked-1.2.5.tgz#a44b31f2a0b8b5bfd610f00d55d1952d1ac1dfdb"
+  integrity sha1-pEsx8qC4tb/WEPANVdGVLRrB39s=
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -7222,6 +7244,15 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
+simplemde@*:
+  version "1.11.2"
+  resolved "https://registry.npm.taobao.org/simplemde/download/simplemde-1.11.2.tgz#a23a35d978d2c40ef07dec008c92f070d8e080e3"
+  integrity sha1-ojo12XjSxA7wfewAjJLwcNjggOM=
+  dependencies:
+    codemirror "*"
+    codemirror-spell-checker "*"
+    marked "*"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/slash/download/slash-1.0.0.tgz?cache=0&sync_timestamp=1593529703136&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fslash%2Fdownload%2Fslash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -7926,6 +7957,11 @@ typedarray@^0.0.6:
   resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typo-js@*:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/typo-js/download/typo-js-1.1.0.tgz#a5a9f592bcb453666bf70c9694da58705d025ed8"
+  integrity sha1-pan1kry0U2Zr9wyWlNpYcF0CXtg=
+
 uglify-js@3.4.x:
   version "3.4.10"
   resolved "https://registry.npm.taobao.org/uglify-js/download/uglify-js-3.4.10.tgz?cache=0&sync_timestamp=1606071597176&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuglify-js%2Fdownload%2Fuglify-js-3.4.10.tgz#9ad9563d8eb3acdfb8d38597d2af1d815f6a755f"
@@ -8196,6 +8232,14 @@ vue-router@^3.2.0:
   version "3.4.9"
   resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.4.9.tgz?cache=0&sync_timestamp=1605950418939&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-3.4.9.tgz#c016f42030ae2932f14e4748b39a1d9a0e250e66"
   integrity sha1-wBb0IDCuKTLxTkdIs5odmg4lDmY=
+
+vue-simplemde@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/vue-simplemde/download/vue-simplemde-1.1.2.tgz#8324b3fceb8a40e5df58d1207367269535978499"
+  integrity sha1-gySz/OuKQOXfWNEgc2cmlTWXhJk=
+  dependencies:
+    marked "*"
+    simplemde "*"
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
