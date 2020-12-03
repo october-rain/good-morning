@@ -49,6 +49,7 @@ export default {
     background-size cover
     background-repeat no-repeat
     background-position center
+    text-align center
     .switch
         position absolute
         width 20%

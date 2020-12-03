@@ -10,10 +10,9 @@ import 'highlight.js/styles/atom-one-dark.css';
 
 import fastClick from "fastclick"
 import VueSimplemde from 'vue-simplemde'
-import hljs from 'highlight.js';
-import 'github-markdown-css';
+import './utils/hljs';
 
-window.hljs = hljs;
+
 Vue.component('vue-simplemde', VueSimplemde)
 Vue.config.productionTip = false
 fastClick.attach(document.body)
