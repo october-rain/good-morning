@@ -85,17 +85,23 @@ export default new Vuex.Store({
                 })
             }
         },
-        getArticleList({ commit }) {
-            axios({
+        async getArticleList({ commit }) {
+            let success = false
+            await axios({
                 url: "http://127.0.0.1:9000/api/get-articlelist/",
                 method: "GET",
                 // data: Qs.stringify()
             }).then((res) => {
-                let articleList = res.article_list
+                let articleList = res.data.article_list
                 commit("setArticleListInfo", articleList)
-                console.log("获取 article list 成功")
-                return true
+                if (res.data.num > 0) {
+                    success = true
+                    // console.log("success", success)
+                }
+                console.log("获取 article list 成功", res.data)
             })
+            // console.log("success", success)
+            return success
         },
         getArticle({ commit }, articleId) {
             axios({
@@ -104,9 +110,9 @@ export default new Vuex.Store({
                     id: articleId,
                 },
             }).then((res) => {
-                let articleContent = res.content
-                commit("setArticleInfo", articleContent, articleId)
-                console.log("获取 article list 成功")
+                let articleContent = res.data.content
+                commit("setArticleInfo", {articleContent, articleId})
+                console.log("获取 article 成功", res)
             })
         },
     },
@@ -123,16 +129,21 @@ export default new Vuex.Store({
         },
         setArticleListInfo(state, articleList) {
             state.articleList = articleList
+            // console.log("state.articleList",state.articleList);
         },
-        setArticleInfo(state, articleContent, articleId) {
-            state.article.content = articleContent
-            let found = state.articleList.find(({ id }) => id === articleId)
-            console.log("found", found)
+        setArticleInfo(state, data) {
+            state.article.content = data.articleContent
+            // console.log(state.article.content)
+            // console.log(state.articleList)
+            // console.log(data.articleId)
+            let found = state.articleList.find((obj) => obj.id == data.articleId)
+            // console.log("found", found)
             state.article.title = found.title
             state.article.desc = found.desc
-            state.article.cover = found.cover 
+            state.article.cover = found.cover
             state.article.time = found.time
-            state.author = found.author
+            state.article.author = found.author
+            // console.log("state.article", state.article);
         },
     },
     modules: {},

@@ -42,7 +42,7 @@ export default {
             // height 16rem
             width 28rem
             vertical-align middle  // 解决基线问题（底部多出2像素）
-            margin-top -50%
+            // margin-top -50%
     .article
         float left
         padding 2rem
