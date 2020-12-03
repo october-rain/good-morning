@@ -5,10 +5,9 @@
             <router-link
                 class="itemrouter"
                 tag="li"
-                to="/article"
+                :to="'/article/' + item.id"
                 v-for="item in articleList"
                 :key="item.id"
-                @click.native="handleClickToArticle(item)"
             >
                 <list-item :article="item"></list-item>
             </router-link>
@@ -26,7 +25,6 @@ export default {
     data() {
         return {
             articleList: [],
-            content: "",
         }
     },
     components: {
@@ -41,12 +39,12 @@ export default {
             }
         })
     },
-    methods: {
-        handleClickToArticle(item) {
-            console.log("id",item.id);
-            this.$store.dispatch('getArticle',item.id)
-        },
-    },
+    // methods: {
+    //     handleClickToArticle(item) {
+    //         console.log("id",item.id);
+    //         this.$store.dispatch('getArticle',item.id)
+    //     },
+    // },
 }
 </script>
 

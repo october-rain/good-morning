@@ -103,18 +103,6 @@ export default new Vuex.Store({
             // console.log("success", success)
             return success
         },
-        getArticle({ commit }, articleId) {
-            axios({
-                url: "http://127.0.0.1:9000/api/get-article/",
-                params: {
-                    id: articleId,
-                },
-            }).then((res) => {
-                let articleContent = res.data.content
-                commit("setArticleInfo", {articleContent, articleId})
-                console.log("获取 article 成功", res)
-            })
-        },
     },
     mutations: {
         changeLoginUserInfo(state, token) {
@@ -130,20 +118,6 @@ export default new Vuex.Store({
         setArticleListInfo(state, articleList) {
             state.articleList = articleList
             // console.log("state.articleList",state.articleList);
-        },
-        setArticleInfo(state, data) {
-            state.article.content = data.articleContent
-            // console.log(state.article.content)
-            // console.log(state.articleList)
-            // console.log(data.articleId)
-            let found = state.articleList.find((obj) => obj.id == data.articleId)
-            // console.log("found", found)
-            state.article.title = found.title
-            state.article.desc = found.desc
-            state.article.cover = found.cover
-            state.article.time = found.time
-            state.article.author = found.author
-            // console.log("state.article", state.article);
         },
     },
     modules: {},
