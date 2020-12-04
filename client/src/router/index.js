@@ -12,9 +12,9 @@ const routes = [
         component: Home,
     },
     {
-        path: "/me",
-        name: "Me",
-        component: () => import("../views/me/Me.vue"),
+        path: "/octoberrain",
+        name: "OctoberRain",
+        component: () => import("../views/octoberRain/OctoberRain.vue"),
     },
     {
         path: "/login",

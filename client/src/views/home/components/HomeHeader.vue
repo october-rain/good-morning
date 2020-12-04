@@ -4,7 +4,7 @@
         <nav class="nav">
             <span class="main" @click="triggerPage('/articlelist')">主页</span>
             <span class="article" @click="triggerPage('/category')">分类</span>
-            <span class="rain" @click="triggerPage('/me')">十雨</span>
+            <span class="rain" @click="triggerPage('/octoberrain')">十雨</span>
         </nav>
         <div :class="infoClass">
             <span
@@ -93,7 +93,6 @@ export default {
         width 3rem
         height 3rem
         border-radius 50%
-        background white
         justify-self end
         overflow hidden
         cursor pointer

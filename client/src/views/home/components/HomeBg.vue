@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.bg 
+.bg
     position relative
     height 100vh
     background #2e2e2e
