@@ -90,9 +90,6 @@ def morn_login(request):
         'username': username
     }
     return Response(data)
-
-
-
 # 发布文章
 @api_view(['POST'])
 def add_article(request):
@@ -133,9 +130,43 @@ def add_article(request):
             new_tag_article = Tag_Article(article_id=new_article,tagID=tag)
             new_tag_article.save()
     return Response('ok')
-
-
-
+# 删除文章
+@api_view(['POST'])
+def del_article(request):
+    article_id = request.POST['article_id']
+    try:
+        token = request.POST['token']
+        username = decode_token(token)
+        article = Article.objects.filter(article_id = article_id)
+        if article:
+            article = article[0]
+            this_username = article.belong.username
+            if username == this_username:
+                article.delete()
+                return Response('ok')
+            else :
+                # 没有权限
+                return Response('no perm')
+        else :
+            return Response('no article')
+    except Exception as e:
+        return Response('error')
+# 获取文章
+@api_view(['GET'])
+def get_article(request):
+    article_id = request.GET['id']
+    try:
+        article_id = int(article_id)
+        article = Article.objects.filter(article_id = article_id)
+        if article:
+            data = {
+                'content':article[0].content
+            }
+            return Response(data)
+        else :
+            return Response('no article')
+    except Exception as e:
+        return Response('error')
 # 获取文章列表
 @api_view(['GET'])
 def get_articlelist(request):
@@ -158,22 +189,6 @@ def get_articlelist(request):
         'article_list':article_list,
     }
     return Response(data)
-# 获取文章
-@api_view(['GET'])
-def get_article(request):
-    article_id = request.GET['id']
-    try:
-        article_id = int(article_id)
-        article = Article.objects.filter(article_id = article_id)
-        if article:
-            data = {
-                'content':article[0].content
-            }
-            return Response(data)
-        else :
-            return Response('no article')
-    except Exception as e:
-        return Response('error')
 # 获取标签
 @api_view(['GET'])
 def get_tag(request):
