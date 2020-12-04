@@ -121,7 +121,8 @@ def add_article(request):
     new_article = Article(title=title)
     new_article.content = content
     new_article.describe = describe
-    new_article.cover = cover
+    if len(cover) > 0:
+        new_article.cover = cover
     new_article.birth = datetime.date.today()
     new_article.belong = user
     new_article.save()
