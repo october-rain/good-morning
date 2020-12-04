@@ -22,7 +22,19 @@ const routes = [
         name: 'AddArticle',
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/addArticle/AddArticle.vue')
-      }
+    },
+    {
+        path: '/articlelist',
+        name: 'ArticleList',
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/articleList/ArticleList.vue')
+    },
+    {
+        path: '/article/:id',
+        name: 'Article',
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/article/Article.vue')
+    }
 ]
 
 const router = new VueRouter({
