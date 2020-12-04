@@ -52,12 +52,23 @@ class Article(models.Model):
     createtime = models.DateField(blank=True,null=True)
     belong = models.ForeignKey(
         Userinfo, on_delete=models.CASCADE, null=True,blank=True, related_name='article_user')
-
     def __str__(self):
         return self.title
 
+# 标签
+class Tag(models.Model):
+    tagID = models.AutoField(primary_key=True)
+    tagname = models.CharField(max_length=20)
+    article = models.ManyToManyField(to='Article', through='Tag_Article', through_fields=('tagID', 'article_id'))
+    def __str__(self):
+        return self.tagname
 
-
+#文章标签关联表
+class Tag_Article(models.Model):
+    tagID = models.ForeignKey(to='Tag', on_delete=models.CASCADE)
+    article_id = models.ForeignKey(to='Article', on_delete=models.CASCADE,)
+    def __int__(self):
+        return self.id
 
 
 
