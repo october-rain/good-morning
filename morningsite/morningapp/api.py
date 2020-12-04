@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password, make_password
-from morningapp.models import Article, Userinfo, Profile, Contact
+from morningapp.models import Article, Userinfo, Profile, Contact,Tag,Tag_Article
 from morningapp.model_data import model_data
 from bs4 import BeautifulSoup
 import random
@@ -12,8 +12,6 @@ import time,datetime
 salt = "dyxzdh"
 
 # 注册
-
-
 @api_view(['POST'])
 def morn_register(request):
     # print(request.POST)
@@ -95,7 +93,7 @@ def morn_login(request):
 
 
 
-# 保存文章
+# 发布文章
 @api_view(['POST'])
 def add_article(request):
     token = request.POST['token']
@@ -125,6 +123,15 @@ def add_article(request):
     new_article.birth = datetime.date.today()
     new_article.belong = user
     new_article.save()
+    # 链接标签
+    strtag = request.POST['tag']
+    tag_list = strtag.strip(',').split(',')
+    for tag_id in tag_list:
+        tag = Tag.objects.filter(tagID = tag_id)
+        if tag:
+            tag = tag[0]
+            new_tag_article = Tag_Article(article_id=new_article,tagID=tag)
+            new_tag_article.save()
     return Response('ok')
 
 
