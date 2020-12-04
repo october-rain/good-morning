@@ -38,7 +38,7 @@ export default {
             this.article = this.articleList.find((obj) => obj.id == this.id)
             console.log(this.article);
             axios({
-                url: "http://127.0.0.1:9000/api/get-article/",
+                url: "https://api.tian999.top/api/get-article/",
                 params: {
                     id: this.$route.params.id,
                 },

@@ -12,29 +12,48 @@ const routes = [
         component: Home,
     },
     {
+        path: "/octoberrain",
+        name: "OctoberRain",
+        component: () => import("../views/octoberRain/OctoberRain.vue"),
+    },
+    {
         path: "/login",
-        name: "login",
+        name: "Login",
         component: Login,
         //component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
     },
     {
-        path: '/addarticle',
-        name: 'AddArticle',
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/addArticle/AddArticle.vue')
+        path: "/profile",
+        name: "Profile",
+        component: () => import("../views/profile/Profile.vue"),
     },
     {
-        path: '/articlelist',
-        name: 'ArticleList',
+        path: "/addarticle",
+        name: "AddArticle",
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/articleList/ArticleList.vue')
+        component: () =>
+            import(
+                /* webpackChunkName: "about" */ "../views/addArticle/AddArticle.vue"
+            ),
     },
     {
-        path: '/article/:id',
-        name: 'Article',
+        path: "/articlelist",
+        name: "ArticleList",
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/article/Article.vue')
-    }
+        component: () =>
+            import(
+                /* webpackChunkName: "about" */ "../views/articleList/ArticleList.vue"
+            ),
+    },
+    {
+        path: "/article/:id",
+        name: "Article",
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import(
+                /* webpackChunkName: "about" */ "../views/article/Article.vue"
+            ),
+    },
 ]
 
 const router = new VueRouter({

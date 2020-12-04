@@ -14,12 +14,15 @@ export default new Vuex.Store({
         isUserLogin(state) {
             return state.userInfo.token
         },
+        getUserInfo(state){
+            return state.userInfo
+        }
     },
     actions: {
         // {commit} 这是利用上下文的语法，使用commit函数方法
         signIn({ commit }, userInfo) {
             axios({
-                url: "http://127.0.0.1:9000/api/morn-login/",
+                url: "https://api.tian999.top/api/morn-login/",
                 method: "post",
                 data: Qs.stringify(userInfo),
             }).then((res) => {
@@ -40,7 +43,7 @@ export default new Vuex.Store({
         },
         signUp({ commit }, userInfo) {
             axios({
-                url: "http://127.0.0.1:9000/api/morn-register/",
+                url: "https://api.tian999.top/api/morn-register/",
                 method: "post",
                 data: Qs.stringify(userInfo),
             }).then((res) => {
@@ -66,14 +69,15 @@ export default new Vuex.Store({
             // console.log("token", token)
             if (token) {
                 axios({
-                    url: "http://127.0.0.1:9000/api/morn-login/",
+                    url: "https://api.tian999.top/api/morn-login/",
                     method: "get",
                     // data: Qs.stringify({token})
                     params: { token },
                 }).then((res) => {
                     // console.log("自动登陆返回信息", res)
                     if (res.data == "error") {
-                        alert("用户登陆过期，请重新登陆")
+                        // alert("用户登陆过期，请重新登陆")
+                        console.log("用户登陆过期，请重新登陆");
                         return
                     }
                     // console.log("res",res)
@@ -84,7 +88,7 @@ export default new Vuex.Store({
         async getArticleList({ commit }) {
             let success = false
             await axios({
-                url: "http://127.0.0.1:9000/api/get-articlelist/",
+                url: "https://api.tian999.top/api/get-articlelist/",
                 method: "GET",
                 // data: Qs.stringify()
             }).then((res) => {

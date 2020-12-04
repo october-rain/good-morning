@@ -1,14 +1,23 @@
 <template>
-    <div class="header">
-        <div class="link">
-            <div class="main">主页</div>
-            <div class="article">全部</div>
-            <div class="rain">十雨</div>
-            <div class="about">关于十雨</div>
-            <div class="login" v-if="!authUserLogin" @click="triggerPage('/login')">登陆</div>
-            <div class="logout" v-else @click="triggerPage('logout')">登出</div>
+    <header class="header">
+        <div class="logo">十雨札记</div>
+        <nav class="nav">
+            <span class="main" @click="triggerPage('/articlelist')">主页</span>
+            <span class="article" @click="triggerPage('/category')">分类</span>
+            <span class="rain" @click="triggerPage('/octoberrain')">十雨</span>
+        </nav>
+        <div :class="infoClass">
+            <span
+                class="login"
+                v-if="!authUserLogin"
+                @click="triggerPage('/login')"
+                >登陆</span
+            >
+            <span class="me" v-else @click="triggerPage('profile')"
+                ><img class="headimg" :src="headImg" alt="头像"></span
+            >
         </div>
-    </div>
+    </header>
 </template>
 
 <script>
@@ -16,42 +25,78 @@
 
 export default {
     name: "HomeInfo",
+    // data() {
+    //     return {
+    //         headImg: this.$store.getters.getUserInfo.profile.headimg
+    //     }
+    // },
+    // mounted() {
+    //     console.log(this.$store.getters.getUserInfo.profile);
+    // },
     computed: {
         // 验证用户是否登陆，登陆在homeHeader里显示“登出”
-        authUserLogin(){
+        authUserLogin() {
             // console.log('authUserLogin',this.$store.getters.isUserLogin);
             return this.$store.getters.isUserLogin ? true : false
+        },
+        infoClass(){
+            return this.$store.getters.isUserLogin ? "after-login" : "info"
+        },
+        headImg(){
+            return this.$store.getters.getUserInfo.profile.headimg
         }
     },
     methods: {
-        triggerPage(path){
-            // this.LoginOrLogout = !this.authUserLogin
-            // console.log(this.LoginOrLogout);
-            if (path === "logout") {
-                this.$store.dispatch("logout")
-                // this.$store.commit('clearUserInfo')
-                // this.$message.success("登出成功")
-            } else {
-                this.$router.push(path)
-            }
+        triggerPage(path) {
+            this.$router.push(path)
         },
     },
 }
 </script>
 
 <style lang="stylus" scoped>
-
 .header
-    border 1px solid black
-    width 100%
-    height 5rem
-    font-size 1.3rem
-    display flex
-    justify-content center
+    width 100vw
+    height 6rem
+    display grid
+    padding 0 5rem
+    grid-template-columns 3fr 10fr 1fr
     align-items center
-    .link
-        display flex
-        width 70%
-        justify-content space-between
+    position relative
+    z-index 10
+    background-color #00000040
+    .logo
+        font-size 2rem
+        font-weight 600
+        color: #e7e9ec
+    .nav
+        padding-top .2rem
+        justify-self end
+        span
+            font-size 1.6rem
+            color #e7e9ec
+            margin 3rem
+            cursor pointer
+    .info
+        padding-top .2rem
+        justify-self end
+        span
+            color #e7e9ec
+            font-size 1.6rem
+            display inline-block
+            width 100%
+            height 100%
+            line-height 3rem
+            text-align center
+            cursor pointer
+    .after-login
+        width 3rem
+        height 3rem
+        border-radius 50%
+        justify-self end
+        overflow hidden
+        cursor pointer
+        .headimg
+            width 100%
 
 </style>

@@ -25,6 +25,7 @@
                     class="field"
                     v-model="userInfo.password2"
                     autocomplete="on"
+                    @keyup.enter="handleClickRegister"
                 />
                 <label class="label">再次输入：</label>
             </div>
@@ -32,13 +33,13 @@
                 <div
                     type="submit"
                     class="btn signin-btn"
-                    @click="handleClickLogin"
+                    @click="handleClickRegister"
                 >
                     注册
                 </div>
                 <!-- <div class="btn signup-btn">注册</div> -->
             </div>
-            <div class="switch">已经注册？点击<span class="register" @click="handleClickRegister">登陆</span></div>
+            <div class="switch">已经注册？点击<span class="register" @click="handleClickLogin">登陆</span></div>
         </form>
     </div>
 </template>
@@ -64,7 +65,7 @@ export default {
         }
     },
     methods: {
-        handleClickLogin() {
+        handleClickRegister() {
             if(this.userInfo.username == "" || this.userInfo.password == '' || this.userInfo.password2 == ''){
                 alert('输入内容不能为空！')
                 return
@@ -80,7 +81,7 @@ export default {
             this.$store.dispatch('signUp', this.userInfo)
             this.$router.push({path: '/'})
         },
-        handleClickRegister(){
+        handleClickLogin(){
             this.hasThisUser = !this.hasThisUser
             this.$emit('switch')
         }
