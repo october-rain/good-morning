@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-/__pycache__
+/morningapp/__pycache__/
+/morningsite/__pycache__/
 *.py[cod]
 *$py.class
-*morning.sqlite3
