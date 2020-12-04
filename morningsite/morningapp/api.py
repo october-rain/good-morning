@@ -30,7 +30,6 @@ def morn_register(request):
     new_user = Userinfo(userID=userID, username=username, password=password)
     new_profile = Profile(belong=new_user, userID=userID)
     new_Contact = Contact(belong=new_user, userID=userID)
-    print(new_user)
     # 保存用户表
     new_user.save()
     # 保存用户信息表
@@ -168,6 +167,7 @@ def get_article(request):
             return Response('no article')
     except Exception as e:
         return Response('error')
+
 # 生成jwtoken
 def create_token(username):
     headers = {

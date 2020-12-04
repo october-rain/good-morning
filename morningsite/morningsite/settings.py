@@ -80,10 +80,20 @@ WSGI_APPLICATION = 'morningsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'morning.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Morning',
+        'HOST': '182.92.233.63',
+        'PORT': 3306,
+        'USER': 'tian',
+        'PASSWORD': 'Tzj250534@',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'morning.sqlite3',
+#     }
+# }
 
 
 # Password validation
