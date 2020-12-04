@@ -5,5 +5,6 @@ urlpatterns = [
     path('morn-login/',api.morn_login),
     path('add-article/',api.add_article),
     path('get-articlelist/',api.get_articlelist),
-    path('get-article/',api.get_article)
+    path('get-article/',api.get_article),
+    path('get-tag/',api.get_tag)
 ]
