@@ -174,6 +174,19 @@ def get_article(request):
             return Response('no article')
     except Exception as e:
         return Response('error')
+# 获取标签
+@api_view(['GET'])
+def get_tag(request):
+    tag_list = Tag.objects.all()
+    data = []
+    for tag in tag_list:
+        tag_data = {
+            'tagID':tag.tagID,
+            'tagname':tag.tagname
+        }
+        data.append(tag_data)
+    return Response(data)
+
 
 # 生成jwtoken
 def create_token(username):
