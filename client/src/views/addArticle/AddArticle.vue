@@ -49,7 +49,7 @@ export default {
                     alert("请输入文章")
                 } else {
                     axios({
-                        url: "http://127.0.0.1:9000/api/add-article/",
+                        url: "https://api.tian999.top/api/add-article/",
                         method: "POST",
                         data: Qs.stringify(this.articleInfo),
                     })

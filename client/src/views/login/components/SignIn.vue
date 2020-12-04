@@ -16,6 +16,7 @@
           class="field"
           v-model="userInfo.password"
           autocomplete="on"
+          @keyup.enter="handleClickLogin"
         />
         <label class="label">密码：</label>
       </div>

@@ -17,6 +17,5 @@ export default {
 .bg 
     position relative
     height 100vh
-    background #333aaa
-
+    background #2e2e2e
 </style>
