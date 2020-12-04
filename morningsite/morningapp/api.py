@@ -168,9 +168,18 @@ def get_article(request):
     except Exception as e:
         return Response('error')
 # 获取文章列表
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def get_articlelist(request):
-    article = Article.objects.all()
+    if request.method == 'GET':
+        article = Article.objects.all()
+    else:
+        try:
+            token = request.POST['token']
+            username = decode_token(token)
+            user = Userinfo.objects.get(username=username)
+            article = Article.objects.filter(belong=user)
+        except Exception as e:
+            return Response('error')
     article_list = []
     num = 0
     for item in article:
@@ -189,17 +198,34 @@ def get_articlelist(request):
         'article_list':article_list,
     }
     return Response(data)
+
 # 获取标签
 @api_view(['GET'])
 def get_tag(request):
     tag_list = Tag.objects.all()
     data = []
     for tag in tag_list:
-        tag_data = {
-            'tagID':tag.tagID,
-            'tagname':tag.tagname
-        }
-        data.append(tag_data)
+        tagID = tag.tagID
+        if tagID == 1:
+            sort_data = {
+                'sortID':tag.tagID,
+                'sortname':tag.tagname,
+                'tag_data':[]
+            }
+        elif (tagID-1) % 100 == 0:
+            data.append(sort_data)
+            sort_data = {
+                'sortID':tag.tagID,
+                'sortname':tag.tagname,
+                'tag_data':[]
+            }
+        else :
+            tag_data = {
+                'tagID':tag.tagID,
+                'tagname':tag.tagname
+            }
+            sort_data['tag_data'].append(tag_data)
+        data.append(sort_data)
     return Response(data)
 
 
