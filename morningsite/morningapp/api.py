@@ -2,16 +2,19 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password, make_password
-from morningapp.models import Article, Userinfo, Profile, Contact,Tag,Tag_Article
+from morningapp.models import Article, Userinfo, Profile, Contact, Tag, Tag_Article
 from morningapp.model_data import model_data
 from bs4 import BeautifulSoup
 import random
 import jwt
-import time,datetime
+import time
+import datetime
 # token密钥
 salt = "dyxzdh"
 
 # 注册
+
+
 @api_view(['POST'])
 def morn_register(request):
     # print(request.POST)
@@ -43,6 +46,8 @@ def morn_register(request):
     return Response(data)
 
 # 登录
+
+
 @api_view(['POST', 'GET'])
 def morn_login(request):
     if request.method == 'GET':
@@ -72,15 +77,15 @@ def morn_login(request):
     userID = user[0].userID
     profile_data = Profile.objects.filter(userID=userID)
     if profile_data:
-        profile = model_data.add_profile(profile_data[0].nickname, profile_data[0].headimg,
-                                         profile_data[0].sex, profile_data[0].birth,profile_data[0].age,
+        profile = model_data.add_profile(profile_data[0].userID, profile_data[0].nickname, profile_data[0].headimg,
+                                         profile_data[0].sex, profile_data[0].birth, profile_data[0].age,
                                          profile_data[0].school, profile_data[0].education, profile_data[0].sign)
     else:
         profile = model_data.add_profile()
     contact_data = Contact.objects.filter(userID=userID)
     if contact_data:
         contact = model_data.add_contact(contact_data[0].weixin, contact_data[0].qq,
-                               contact_data[0].email, contact_data[0].github, contact_data[0].weibo,)
+                                         contact_data[0].email, contact_data[0].github, contact_data[0].weibo,)
     else:
         contact = model_data.add_contact()
     data = {
@@ -91,6 +96,8 @@ def morn_login(request):
     }
     return Response(data)
 # 发布文章
+
+
 @api_view(['POST'])
 def add_article(request):
     token = request.POST['token']
@@ -99,7 +106,7 @@ def add_article(request):
         user = Userinfo.objects.filter(username=username)
         if user:
             user = user[0]
-        else :
+        else:
             return Response('error')
     except Exception as e:
         print(e)
@@ -124,51 +131,57 @@ def add_article(request):
     strtag = request.POST['tag']
     tag_list = strtag.strip(',').split(',')
     for tag_id in tag_list:
-        tag = Tag.objects.filter(tagID = tag_id)
+        tag = Tag.objects.filter(tagID=tag_id)
         if tag:
             tag = tag[0]
-            new_tag_article = Tag_Article(article_id=new_article,tagID=tag)
+            new_tag_article = Tag_Article(article_id=new_article, tagID=tag)
             new_tag_article.save()
     return Response('ok')
 # 删除文章
+
+
 @api_view(['POST'])
 def del_article(request):
     article_id = request.POST['article_id']
     try:
         token = request.POST['token']
         username = decode_token(token)
-        article = Article.objects.filter(article_id = article_id)
+        article = Article.objects.filter(article_id=article_id)
         if article:
             article = article[0]
             this_username = article.belong.username
             if username == this_username:
                 article.delete()
                 return Response('ok')
-            else :
+            else:
                 # 没有权限
                 return Response('no perm')
-        else :
+        else:
             return Response('no article')
     except Exception as e:
         return Response('error')
 # 获取文章
+
+
 @api_view(['GET'])
 def get_article(request):
     article_id = request.GET['id']
     try:
         article_id = int(article_id)
-        article = Article.objects.filter(article_id = article_id)
+        article = Article.objects.filter(article_id=article_id)
         if article:
             data = {
-                'content':article[0].content
+                'content': article[0].content
             }
             return Response(data)
-        else :
+        else:
             return Response('no article')
     except Exception as e:
         return Response('error')
 # 获取文章列表
-@api_view(['GET','POST'])
+
+
+@api_view(['GET', 'POST'])
 def get_articlelist(request):
     if request.method == 'GET':
         article = Article.objects.all()
@@ -184,22 +197,24 @@ def get_articlelist(request):
     num = 0
     for item in article:
         article_data = {
-            'id':item.article_id,
-            'title':item.title,
-            'cover':item.cover,
-            'time':item.createtime,
-            'desc':item.describe,
-            'author':item.belong.username
+            'id': item.article_id,
+            'title': item.title,
+            'cover': item.cover,
+            'time': item.createtime,
+            'desc': item.describe,
+            'author': item.belong.username
         }
-        num = num + 1 
+        num = num + 1
         article_list.append(article_data)
     data = {
-        'num':num,
-        'article_list':article_list,
+        'num': num,
+        'article_list': article_list,
     }
     return Response(data)
 
 # 获取标签
+
+
 @api_view(['GET'])
 def get_tag(request):
     tag_list = Tag.objects.all()
@@ -208,21 +223,21 @@ def get_tag(request):
         tagID = tag.tagID
         if tagID == 1:
             sort_data = {
-                'sortID':tag.tagID,
-                'sortname':tag.tagname,
-                'tag_data':[]
+                'sortID': tag.tagID,
+                'sortname': tag.tagname,
+                'tag_data': []
             }
         elif (tagID-1) % 100 == 0:
             data.append(sort_data)
             sort_data = {
-                'sortID':tag.tagID,
-                'sortname':tag.tagname,
-                'tag_data':[]
+                'sortID': tag.tagID,
+                'sortname': tag.tagname,
+                'tag_data': []
             }
-        else :
+        else:
             tag_data = {
-                'tagID':tag.tagID,
-                'tagname':tag.tagname
+                'tagID': tag.tagID,
+                'tagname': tag.tagname
             }
             sort_data['tag_data'].append(tag_data)
         data.append(sort_data)
@@ -249,6 +264,8 @@ def create_token(username):
     return token
 
 # token解码
+
+
 def decode_token(token):
     info = jwt.decode(token, salt, True, algorithm='HS256')
     username = info['username']

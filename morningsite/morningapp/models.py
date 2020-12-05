@@ -27,8 +27,8 @@ class Profile(models.Model):
     sign = models.CharField(max_length=200, blank=True)
     belong = models.OneToOneField(
         Userinfo, on_delete=models.CASCADE, blank=True)
-    def __int__(self):
-        return self.userID
+    def __str__(self):
+        return self.belong.username
 
 # 联系方式表
 class Contact(models.Model):
@@ -40,8 +40,8 @@ class Contact(models.Model):
     weibo = models.CharField(max_length=20, blank=True)
     belong = models.OneToOneField(
         Userinfo, on_delete=models.CASCADE, blank=True)
-    def __int__(self):
-        return self.userID
+    def __str__(self):
+        return self.belong.username
 # 文章
 class Article(models.Model):
     article_id = models.AutoField(primary_key=True)
