@@ -79,6 +79,7 @@ def morn_login(request):
         'userID':userID,
         'username':username,
         'nickname':profile_data[0].nickname,
+        'headimg':profile_data[0].headimg,
         'token':token
     }
     # if profile_data:
