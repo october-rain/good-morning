@@ -31,12 +31,11 @@ export default {
     },
     computed: {
         getUserProfile() {
-            return this.$store.getters.getUserInfo.profile
+            // console.log(this.$store.getters.getUserInfo)
+            return this.$store.getters.getUserInfo
         },
     },
     mounted() {
-        // console.log(this.$store.getters.getUserInfo.profile)
-
         // 点击下拉框之外的区域让下拉框消失
         document.addEventListener("click", (e) => {
             if (!this.$el.contains(e.target)) this.show = false

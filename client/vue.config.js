@@ -1,9 +1,11 @@
 const cdn = {
     externals: {
-        vue: "Vue",
+        // vue: "Vue",
         vuex: "Vuex",
         "vue-router": "VueRouter",
         axios: "axios",
+        "echarts": "echarts",
+        "vue-echarts": "ECharts"
         //   "element-ui": "ELEMENT",
     },
     css: [
@@ -11,12 +13,12 @@ const cdn = {
         "https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css",
     ],
     js: [
-        "https://cdn.bootcss.com/vue/2.6.10/vue.min.js",
+        // "https://cdn.jsdelivr.net/npm/vue/dist/vue.js",
+        // "https://cdn.bootcss.com/vue/2.6.10/vue.min.js",
         "https://cdn.bootcss.com/vue-router/3.1.3/vue-router.min.js",
         "https://cdn.bootcss.com/vuex/3.1.2/vuex.min.js",
         //   'https://lib.baomitu.com/element-ui/2.13.2/index.js',
         "https://cdn.bootcss.com/axios/0.19.2/axios.min.js",
-        "https://cdn.jsdelivr.net/npm/vue/dist/vue.js",
         "https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js",
         "https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js",
     ],

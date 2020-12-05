@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "core-js": "^3.6.5",
+        "echarts": "^5.0.0",
         "fastclick": "^1.0.6",
         "github-markdown-css": "^4.0.0",
         "highlight.js": "^10.4.0",

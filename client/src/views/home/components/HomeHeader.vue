@@ -43,7 +43,8 @@ export default {
             return this.$store.getters.isUserLogin ? "after-login" : "info"
         },
         headImg(){
-            return this.$store.getters.getUserInfo.profile.headimg
+            // console.log(this.$store.getters.getUserInfo);
+            return this.$store.getters.getUserInfo.headimg
         }
     },
     methods: {

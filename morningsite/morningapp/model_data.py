@@ -1,7 +1,6 @@
 class model_data():
-    def add_profile(userID='',nickname='',headimg='',sex='',birth='',age='',school='',education='',sign=''):
+    def add_profile(nickname='',headimg='',sex='',birth='',age='',school='',education='',sign=''):
         profile = {
-            'userID':userID,
             'nickname':nickname,
             'headimg':headimg,
             'sex':sex,

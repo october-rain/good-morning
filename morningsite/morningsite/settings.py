@@ -26,7 +26,7 @@ SECRET_KEY = 'ix*@j92^e!o@-p&7c$78o=r1@viooy25rt*4k&!7_2ekeu5(%t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -80,20 +80,10 @@ WSGI_APPLICATION = 'morningsite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Morning',
-        'HOST': '182.92.233.63',
-        'PORT': 3306,
-        'USER': 'tian',
-        'PASSWORD': 'Tzj250534@',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'morning.sqlite3',
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'morning.sqlite3',
-#     }
-# }
 
 
 # Password validation
@@ -134,15 +124,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/upload/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'upload')
-STATIC_ROOT =os.path.join(BASE_DIR,'static')
+MEDIA_ROOT = os.path.join(BASE_DIR,'upload').replace('\\','/')
+
 CORS_ALLOW_CREDENTIALS = True 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1',
-    'http://113.57.237.5',
-    'http://58.19.2.245',
-    'http://117.152.223.33'
 )
 
 CORS_ALLOW_METHODS = ( 

@@ -12,7 +12,7 @@ import fastClick from "fastclick"
 import VueSimplemde from 'vue-simplemde'
 import './utils/hljs';
 
-
+Vue.prototype.$echarts = window.echarts
 Vue.component('vue-simplemde', VueSimplemde)
 Vue.config.productionTip = false
 fastClick.attach(document.body)
