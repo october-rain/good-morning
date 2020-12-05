@@ -13,8 +13,6 @@ import datetime
 salt = "dyxzdh"
 
 # 注册
-
-
 @api_view(['POST'])
 def morn_register(request):
     # print(request.POST)
@@ -30,6 +28,7 @@ def morn_register(request):
         old_user = Userinfo.objects.filter(userID=userID)
     new_user = Userinfo(userID=userID, username=username, password=password)
     new_profile = Profile(belong=new_user, userID=userID)
+    new_profile.nickname = '十月札记' + str(userID)
     new_Contact = Contact(belong=new_user, userID=userID)
     # 保存用户表
     new_user.save()
@@ -76,28 +75,64 @@ def morn_login(request):
             return Response('nouser')
     userID = user[0].userID
     profile_data = Profile.objects.filter(userID=userID)
+    data = {
+        'userID':userID,
+        'username':username,
+        'nickname':profile_data[0].nickname,
+        'token':token
+    }
+    # if profile_data:
+    #     profile = model_data.add_profile(profile_data[0].userID, profile_data[0].nickname, profile_data[0].headimg,
+    #                                      profile_data[0].sex, profile_data[0].birth, profile_data[0].age,
+    #                                      profile_data[0].school, profile_data[0].education, profile_data[0].sign)
+    # else:
+    #     profile = model_data.add_profile()
+    # contact_data = Contact.objects.filter(userID=userID)
+    # if contact_data:
+    #     contact = model_data.add_contact(contact_data[0].weixin, contact_data[0].qq,
+    #                                      contact_data[0].email, contact_data[0].github, contact_data[0].weibo,)
+    # else:
+    #     contact = model_data.add_contact()
+    # data = {
+    #     'token': token,
+    #     'profile': profile,
+    #     'contact': contact,
+    #     'username': username
+    # }
+    return Response(data)
+
+@api_view(['POST'])
+def get_message(request):
+    try:
+        token = request.POST['token']
+        username = decode_token(token)
+        user = Userinfo.objects.get(username=username)
+        userID = user.userID
+        profile_data = Profile.objects.filter(userID=userID)
+        contact_data = Contact.objects.filter(userID=userID)
+    except Exception as e:
+        return Response('error')
+
     if profile_data:
         profile = model_data.add_profile(profile_data[0].userID, profile_data[0].nickname, profile_data[0].headimg,
                                          profile_data[0].sex, profile_data[0].birth, profile_data[0].age,
                                          profile_data[0].school, profile_data[0].education, profile_data[0].sign)
     else:
         profile = model_data.add_profile()
-    contact_data = Contact.objects.filter(userID=userID)
     if contact_data:
         contact = model_data.add_contact(contact_data[0].weixin, contact_data[0].qq,
                                          contact_data[0].email, contact_data[0].github, contact_data[0].weibo,)
     else:
         contact = model_data.add_contact()
     data = {
+        'username': username,
         'token': token,
         'profile': profile,
-        'contact': contact,
-        'username': username
+        'contact': contact
+        
     }
     return Response(data)
 # 发布文章
-
-
 @api_view(['POST'])
 def add_article(request):
     token = request.POST['token']

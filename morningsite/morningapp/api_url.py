@@ -8,5 +8,9 @@ urlpatterns = [
     path('get-articlelist/',api.get_articlelist),
     path('get-article/',api.get_article),
     path('del-article/',api.del_article),
-    path('get-tag/',api.get_tag)
+    path('get-tag/',api.get_tag),
+
+
+    # 获取个人信息
+    path('get-message/',api.get_message)
 ]

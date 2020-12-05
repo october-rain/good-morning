@@ -141,7 +141,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1',
     'http://113.57.237.5',
-    'http://58.19.2.245'
+    'http://58.19.2.245',
     'http://117.152.223.33'
 )
 
