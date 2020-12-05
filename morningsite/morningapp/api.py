@@ -276,7 +276,7 @@ def get_tag(request):
                 'tagname': tag.tagname
             }
             sort_data['tag_data'].append(tag_data)
-        data.append(sort_data)
+    data.append(sort_data)
     return Response(data)
 
 
