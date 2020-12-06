@@ -3,6 +3,7 @@ from morningapp import api
 urlpatterns = [
     path('morn-register/',api.morn_register),
     path('morn-login/',api.morn_login),
+    path('change-password/',api.change_password),
     # 文章操作
     path('add-article/',api.add_article),
     path('get-articlelist/',api.get_articlelist),
