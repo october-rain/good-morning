@@ -9,6 +9,7 @@ import random
 import jwt
 import time
 import datetime
+import json
 # token密钥
 salt = "dyxzdh"
 
@@ -163,8 +164,8 @@ def add_article(request):
     new_article.belong = user
     new_article.save()
     # 链接标签
-    strtag = request.POST['tag']
-    tag_list = strtag.strip(',').split(',')
+    # 去json化 ，获取列表
+    tag_list = json.loads(request.POST['tag'])
     for tag_id in tag_list:
         tag = Tag.objects.filter(tagID=tag_id)
         if tag:
@@ -231,11 +232,14 @@ def get_articlelist(request):
     article_list = []
     num = 0
     for item in article:
+        Ttime = item.createtime
+        this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
+        print(this_time)
         article_data = {
             'id': item.article_id,
             'title': item.title,
             'cover': item.cover,
-            'time': item.createtime,
+            'time': this_time,
             'desc': item.describe,
             'author': item.belong.username
         }

@@ -56,7 +56,7 @@ class Article(models.Model):
                              default='https://api.tian999.top/upload/pic.png')
     describe = models.CharField(null=True, blank=True, max_length=200)
     content = models.TextField()
-    createtime = models.DateField(blank=True, null=True)
+    createtime = models.DateTimeField(auto_now_add=True,null=True)
     belong = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='article_user')
 
