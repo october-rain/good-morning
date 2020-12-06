@@ -1,7 +1,8 @@
 <template>
     <div class="home">
         <home-bg>
-            <home-header slot="info"></home-header>
+            <home-header slot="header"></home-header>
+            <home-info slot="info"></home-info>
             <home-foot slot="foot"></home-foot>
         </home-bg>
     </div>
@@ -9,6 +10,7 @@
 
 <script>
 import HomeHeader from "./components/HomeHeader"
+import HomeInfo from "./components/HomeInfo"
 import HomeBg from "./components/HomeBg"
 import HomeFoot from "./components/HomeFoot"
 
@@ -18,6 +20,7 @@ export default {
         HomeHeader,
         HomeBg,
         HomeFoot,
+        HomeInfo
     },
 }
 </script>

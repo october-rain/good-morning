@@ -1,5 +1,6 @@
 <template>
     <div class="bg">
+        <slot name="header"></slot>
         <slot name="info"></slot>
         <slot name="foot"></slot>
     </div>
@@ -10,6 +11,7 @@
 
 export default {
     name: "HomeBg",
+
 }
 </script>
 
