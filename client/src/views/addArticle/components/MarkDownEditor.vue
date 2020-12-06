@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 /* @import '~simplemde/dist/simplemde.min.css';
 @import '~simplemde/dist/simplemde.min.css';
 @import '~highlight.js/styles/atom-one-dark.css';
@@ -119,5 +119,10 @@ export default {
 .md
     max-width 76rem
     margin 0 auto
-    font-size 1.2rem
+    font-size 1.4rem
+    background #fff
+    border-radius 2rem
+    .editor-toolbar
+        border none
+ 
 </style>

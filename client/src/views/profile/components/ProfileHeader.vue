@@ -12,7 +12,9 @@
             </div>
             <div class="dropdown" v-show="show">
                 <div class="edit">编辑</div>
-                <div class="writing" @click="triggerPage('addarticle')">写作</div>
+                <div class="writing" @click="triggerPage('addarticle')">
+                    写作
+                </div>
                 <div class="logout" @click="triggerPage('logout')">登出</div>
             </div>
         </div>
@@ -38,6 +40,8 @@ export default {
     mounted() {
         // 点击下拉框之外的区域让下拉框消失
         document.addEventListener("click", (e) => {
+            // console.log("e", e.target)
+            // console.log("!this.$el.contains(e.target)",!this.$el.contains(e.target))
             if (!this.$el.contains(e.target)) this.show = false
         })
     },
@@ -106,5 +110,4 @@ export default {
                 margin 1rem
                 padding-left .2rem
                 cursor pointer
-
 </style>

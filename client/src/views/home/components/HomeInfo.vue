@@ -21,7 +21,8 @@ export default {
             words: [],
             currentWordIndex: null,
             maxWordIndex: null,
-            currentWord: null
+            currentWord: null,
+            timer: null
         }
     },
     methods: {
@@ -38,7 +39,7 @@ export default {
                     span.className = "letter"
                     // console.log(span);
                     word.append(span)
-                    console.log(word);
+                    // console.log(word);
                 })
             })
             this.currentWordIndex = 0
@@ -66,6 +67,7 @@ export default {
                 letter.className = "letter behind"
                 setTimeout(() => {
                     letter.className = "letter in"
+                    console.log(letter.className);
                 }, 340 + i * 80)
                 // console.log(letter.className);
             })
@@ -76,7 +78,12 @@ export default {
     mounted() {
         this.changeWordsStyle()
         this.rotateText()
-        setInterval(this.rotateText, 4000)
+        this.timer = setInterval(this.rotateText, 4000)
+    },
+    beforeDestroy() {
+        console.log('success');
+        // clearTimeout(param);
+        clearInterval(this.timer)
     },
 }
 </script>
