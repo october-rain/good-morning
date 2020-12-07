@@ -124,5 +124,7 @@ export default {
     border-radius 2rem
     .editor-toolbar
         border none
+    .CodeMirror
+        height 60vh
  
 </style>

@@ -107,7 +107,7 @@ export default {
                     axios({
                         url: "https://api.tian999.top/api/add-article/",
                         method: "POST",
-                        data: Qs.stringify(this.articleInfo),
+                        data: Qs.stringify(this.articleInfo, { indices: false }),
                     })
                         .then((res) => {
                             console.log("add-article 请求成功")
@@ -169,7 +169,8 @@ export default {
         //     return res
         // },
         receiveTags(tags){
-            this.articleInfo.tag = tags
+            this.articleInfo.tag = JSON.stringify(tags)
+            // console.log(this.articleInfo.tag[0]);
         }
     },
 }
@@ -177,10 +178,13 @@ export default {
 
 <style lang="stylus" scoped>
 .add-article
-    height 100vh
-    padding-top 10rem
+    min-height 100vh
+    height 100%
+    padding-top 5vh
+    padding-bottom 5vh
     background #2e2e2e
     .content
+        height 100%
         margin 0 auto
         max-width 76rem
         input
@@ -196,7 +200,7 @@ export default {
         .desc
             width 46rem
         .button
-            margin 5rem auto 0
+            margin 4vh auto 0
             position relative
             width 24rem
             height 6rem
