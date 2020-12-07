@@ -236,10 +236,10 @@ def get_articlelist(request):
     article_list = []
     num = 0
     for item in article:
-        Ttime = item.article_id.createtime
+        Ttime = item.createtime
         this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
         # 获取文章中的标签
-        tag_article = Tag_Article.objects.filter(article_id=item.article_id.article_id)
+        tag_article = Tag_Article.objects.filter(article_id=item.article_id)
         tag_data = []
         if tag_article:
             for tag in tag_article:
@@ -249,12 +249,12 @@ def get_articlelist(request):
                 }
                 tag_data.append(data)
         article_data = {
-            'id': item.article_id.article_id,
-            'title': item.article_id.title,
-            'cover': item.article_id.cover,
+            'id': item.article_id,
+            'title': item.title,
+            'cover': item.cover,
             'time': this_time,
-            'desc': item.article_id.describe,
-            'author': item.article_id.belong.username,
+            'desc': item.describe,
+            'author': item.belong.username,
             'tag_data':tag_data
         }
         num = num + 1
