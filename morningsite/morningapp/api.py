@@ -2,13 +2,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password, make_password
-from morningapp.models import Article, Userinfo, Profile, Contact, Tag, Tag_Article
+from morningapp.models import Article, Profile, Contact, Tag, Tag_Article
 from morningapp.model_data import model_data
 from bs4 import BeautifulSoup
 import random
 import jwt
 import time
 import datetime
+import json
 # token密钥
 salt = "dyxzdh"
 
@@ -18,15 +19,16 @@ def morn_register(request):
     # print(request.POST)
     username = request.POST['username']
     password = request.POST['password']
-    user = Userinfo.objects.filter(username=username)
+    user = User.objects.filter(username=username)
     if user:
         return Response('repeat')
     userID = random.randint(10000000, 99999999)
-    old_user = Userinfo.objects.filter(userID=userID)
+    old_user = User.objects.filter(id=userID)
     while old_user:
         userID = random.randint(10000000, 99999999)
-        old_user = Userinfo.objects.filter(userID=userID)
-    new_user = Userinfo(userID=userID, username=username, password=password)
+        old_user = User.objects.filter(id=userID)
+    new_password = make_password(password, username)
+    new_user = User(id=userID, username=username, password=new_password)
     new_profile = Profile(belong=new_user, userID=userID)
     new_profile.nickname = '十月札记' + str(userID)
     new_Contact = Contact(belong=new_user, userID=userID)
@@ -45,15 +47,13 @@ def morn_register(request):
     return Response(data)
 
 # 登录
-
-
 @api_view(['POST', 'GET'])
 def morn_login(request):
     if request.method == 'GET':
         token = request.GET['token']
         try:
             username = decode_token(token)
-            user = Userinfo.objects.filter(username=username)
+            user = User.objects.filter(username=username)
             if user:
                 pass
             else:
@@ -64,7 +64,7 @@ def morn_login(request):
     else:
         username = request.POST['username']
         password = request.POST['password']
-        user = Userinfo.objects.filter(username=username)
+        user = User.objects.filter(username=username)
         if user:
             checkPwd = check_password(password, user[0].password)
             if checkPwd:
@@ -73,7 +73,7 @@ def morn_login(request):
                 return Response('pwderr')
         else:
             return Response('nouser')
-    userID = user[0].userID
+    userID = user[0].id
     profile_data = Profile.objects.filter(userID=userID)
     data = {
         'userID':userID,
@@ -82,32 +82,32 @@ def morn_login(request):
         'headimg':profile_data[0].headimg,
         'token':token
     }
-    # if profile_data:
-    #     profile = model_data.add_profile(profile_data[0].userID, profile_data[0].nickname, profile_data[0].headimg,
-    #                                      profile_data[0].sex, profile_data[0].birth, profile_data[0].age,
-    #                                      profile_data[0].school, profile_data[0].education, profile_data[0].sign)
-    # else:
-    #     profile = model_data.add_profile()
-    # contact_data = Contact.objects.filter(userID=userID)
-    # if contact_data:
-    #     contact = model_data.add_contact(contact_data[0].weixin, contact_data[0].qq,
-    #                                      contact_data[0].email, contact_data[0].github, contact_data[0].weibo,)
-    # else:
-    #     contact = model_data.add_contact()
-    # data = {
-    #     'token': token,
-    #     'profile': profile,
-    #     'contact': contact,
-    #     'username': username
-    # }
     return Response(data)
+# 修改密码
+@api_view(['POST'])
+def change_password(request):
+    try:
+        token = request.POST['token']
+        password = request.POST['password']
+        username = decode_token(token)
+        user = User.objects.filter(username=username)
+        if user:
+            user = user[0]
+            user.password = password
+            user.save()
+            return Response('ok')
+        else :
+            return Response('error')
+    except Exception as e:
+        return Response('error')
 
+# 获取个人信息
 @api_view(['POST'])
 def get_message(request):
     try:
         token = request.POST['token']
         username = decode_token(token)
-        user = Userinfo.objects.get(username=username)
+        user = User.objects.get(username=username)
         userID = user.userID
         profile_data = Profile.objects.filter(userID=userID)
         contact_data = Contact.objects.filter(userID=userID)
@@ -139,7 +139,7 @@ def add_article(request):
     token = request.POST['token']
     try:
         username = decode_token(token)
-        user = Userinfo.objects.filter(username=username)
+        user = User.objects.filter(username=username)
         if user:
             user = user[0]
         else:
@@ -164,8 +164,8 @@ def add_article(request):
     new_article.belong = user
     new_article.save()
     # 链接标签
-    strtag = request.POST['tag']
-    tag_list = strtag.strip(',').split(',')
+    # 去json化 ，获取列表
+    tag_list = json.loads(request.POST['tag'])
     for tag_id in tag_list:
         tag = Tag.objects.filter(tagID=tag_id)
         if tag:
@@ -173,9 +173,9 @@ def add_article(request):
             new_tag_article = Tag_Article(article_id=new_article, tagID=tag)
             new_tag_article.save()
     return Response('ok')
+
+
 # 删除文章
-
-
 @api_view(['POST'])
 def del_article(request):
     article_id = request.POST['article_id']
@@ -196,9 +196,9 @@ def del_article(request):
             return Response('no article')
     except Exception as e:
         return Response('error')
+
+
 # 获取文章
-
-
 @api_view(['GET'])
 def get_article(request):
     article_id = request.GET['id']
@@ -225,18 +225,21 @@ def get_articlelist(request):
         try:
             token = request.POST['token']
             username = decode_token(token)
-            user = Userinfo.objects.get(username=username)
+            user = User.objects.get(username=username)
             article = Article.objects.filter(belong=user)
         except Exception as e:
             return Response('error')
     article_list = []
     num = 0
     for item in article:
+        Ttime = item.createtime
+        this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
+        print(this_time)
         article_data = {
             'id': item.article_id,
             'title': item.title,
             'cover': item.cover,
-            'time': item.createtime,
+            'time': this_time,
             'desc': item.describe,
             'author': item.belong.username
         }
@@ -248,9 +251,8 @@ def get_articlelist(request):
     }
     return Response(data)
 
+
 # 获取标签
-
-
 @api_view(['GET'])
 def get_tag(request):
     tag_list = Tag.objects.all()
@@ -300,8 +302,6 @@ def create_token(username):
     return token
 
 # token解码
-
-
 def decode_token(token):
     info = jwt.decode(token, salt, True, algorithm='HS256')
     username = info['username']
