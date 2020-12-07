@@ -13,5 +13,11 @@ urlpatterns = [
 
 
     # 获取个人信息
-    path('get-message/',api.get_message)
+    path('get-message/',api.get_message),
+    # 获取标签下的文章
+    path('get-taglist/',api.get_taglist)
+
+    # path('test/',api.test)
+
+
 ]

@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password, make_password
 from morningapp.models import Article, Profile, Contact, Tag, Tag_Article
 from morningapp.model_data import model_data
+from method import solve_img
 from bs4 import BeautifulSoup
+from PIL import Image
+import os
 import random
 import jwt
 import time
@@ -150,6 +153,7 @@ def add_article(request):
     title = request.POST['title']
     describe = request.POST['describe']
     cover = request.POST['cover']
+    url = solve_img.creat_img(cover,title)
     content = request.POST['content']
     rep_title = Article.objects.filter(title=title)
     if rep_title:
@@ -158,8 +162,8 @@ def add_article(request):
     new_article = Article(title=title)
     new_article.content = content
     new_article.describe = describe
-    if len(cover) > 0:
-        new_article.cover = cover
+    if len(url) > 0:
+        new_article.cover = url
     new_article.birth = datetime.date.today()
     new_article.belong = user
     new_article.save()
@@ -232,16 +236,26 @@ def get_articlelist(request):
     article_list = []
     num = 0
     for item in article:
-        Ttime = item.createtime
+        Ttime = item.article_id.createtime
         this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
-        print(this_time)
+        # 获取文章中的标签
+        tag_article = Tag_Article.objects.filter(article_id=item.article_id.article_id)
+        tag_data = []
+        if tag_article:
+            for tag in tag_article:
+                data = {
+                    'tagID':tag.tagID.tagID,
+                    'tagname':tag.tagID.tagname,
+                }
+                tag_data.append(data)
         article_data = {
-            'id': item.article_id,
-            'title': item.title,
-            'cover': item.cover,
+            'id': item.article_id.article_id,
+            'title': item.article_id.title,
+            'cover': item.article_id.cover,
             'time': this_time,
-            'desc': item.describe,
-            'author': item.belong.username
+            'desc': item.article_id.describe,
+            'author': item.article_id.belong.username,
+            'tag_data':tag_data
         }
         num = num + 1
         article_list.append(article_data)
@@ -280,7 +294,28 @@ def get_tag(request):
             sort_data['tag_data'].append(tag_data)
     data.append(sort_data)
     return Response(data)
-
+# 获取标签下的文章
+@api_view(['GET'])
+def get_taglist(request):
+    tagID = request.GET['tagID']
+    data = {
+        'tagID':tagID,
+        'article_data':[]
+    }
+    tag = Tag.objects.filter(tagID=tagID)
+    if tag:
+        tag_article = Tag_Article.objects.filter(tagID=tag[0])
+        for item in tag_article:
+            article_data = {
+                'id': item.article_id.article_id,
+                'title': item.article_id.title,
+                'cover': item.article_id.cover,
+                'time': item.article_id.createtime,
+                'desc': item.article_id.describe,
+                'author': item.article_id.belong.username,
+            }
+            data['article_data'].append(article_data)
+    return Response(data)
 
 # 生成jwtoken
 def create_token(username):
@@ -306,3 +341,13 @@ def decode_token(token):
     info = jwt.decode(token, salt, True, algorithm='HS256')
     username = info['username']
     return username
+
+
+
+# # 测试接口
+# @api_view(['POST'])
+# def test(request):
+#     src = request.POST['src']
+#     article_name = '文章的名称1'
+#     url = solve_img.creat_img(src,article_name)
+#     return Response(url)
