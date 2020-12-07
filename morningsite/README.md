@@ -35,7 +35,12 @@ morningsite/morningapp 文件夹为djangoapp文件
 * ```
   pip install PyMysql
   ```
-
+* ```
+  pip install tinify
+  ```
+* ```
+  pip install pillow
+  ```
 ## 后台
 
 https://api.tian999.top 
