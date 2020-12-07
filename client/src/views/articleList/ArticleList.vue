@@ -9,7 +9,7 @@
                 v-for="item in articleList"
                 :key="item.id"
             >
-                <list-item :article="item"></list-item>
+                <list-item class="item" :article="item"></list-item>
             </router-link>
         </ul>
     </div>
@@ -50,12 +50,19 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.list
-    padding-top 3rem
-    padding-left 0
-    max-width 80rem
-    margin 0 auto
-    .itemrouter
-        margin-top 3rem
+<style lang="stylus">
+.body
+    // background-color #444
+    .list
+        background-color #fff
+        padding-top 3rem
+        padding-left 0
+        max-width 80rem
+        margin 0 auto 8rem
+        .itemrouter
+            margin-top 8rem
+            box-shadow: 8px 8px 2px 1px rgba(0, 0, 255, .2);
+        .itemrouter:nth-child(2n)
+            .cover
+                float right
 </style>

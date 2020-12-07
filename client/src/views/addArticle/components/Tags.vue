@@ -37,13 +37,22 @@ export default {
     beforeMount() {
         this.getTag()
     },
+    watch: {
+        isShow: function(newVal){
+            if(newVal === false){
+                // console.log("newVal === true");
+                // console.log(this.tags);
+                this.$emit("receiveTags",this.tags)
+            }
+        }
+    },
     mounted() {
         document.addEventListener("click", (e) => {
             // console.log("e",e.target);
             // console.log("!this.$el.contains(e.target)",!this.$el.contains(e.target))
             if (!this.$el.contains(e.target)) {
                 this.isShow = false
-                this.$emit("receiveTags",this.tags)
+                // this.$emit("receiveTags",this.tags)
             }
         })
     },
@@ -66,7 +75,9 @@ export default {
                 // console.log(index);
                 this.tags.splice(index, 1)
             } else {
+                // console.log("do push")
                 this.tags.push(tagID)
+                // console.log(this.tags);
             }
             // console.log("tag", this.tag)
             // console.log(this.isInTags(tagID))

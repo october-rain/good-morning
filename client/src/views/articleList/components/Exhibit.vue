@@ -33,7 +33,7 @@
             </div>
         </div> -->
         <div class="header">
-            <div class="triangle"></div>
+            <div class="triangle" @click="triggerPage('/')"></div>
         </div>
     </div>
 </template>
@@ -47,7 +47,7 @@ export default {
         return {
             imgWidth: null,
             imgHeight: null,
-            hiddenText: false,
+            // hiddenText: false,
             // date: {},
         }
     },
@@ -72,7 +72,7 @@ export default {
         //     clipRelativeInput: true,
         // })
     // },
-    // methods: {
+    methods: {
         // getYearMonthDay() {
         //     const date = new Date()
         //     this.date.year = date.getFullYear()
@@ -86,7 +86,10 @@ export default {
         //         this.hiddenText = true
         //     }, 3000)
         // },
-    // },
+        triggerPage(path){
+            this.$router.push(path)
+        }
+    },
 }
 </script>
 
@@ -128,6 +131,7 @@ export default {
             right 0
             line-height 100vh
             text-align center
+            user-select none
         h1:first-child
             clip-path: polygon(0 0,100% 0,100% 30%,-65% 100%,0 100%);
         h1:last-child
@@ -151,8 +155,10 @@ export default {
             height: 0;
             border: 1.4rem solid transparent;
             border-right: 2rem solid #aaa;
+            border-radius .4rem
             cursor pointer
         .triangle:hover
             border: 1.4rem solid transparent;
             border-right: 2rem solid #fff;
+            border-radius .4rem
 </style>
