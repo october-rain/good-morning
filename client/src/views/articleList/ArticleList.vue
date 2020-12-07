@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <!-- header -->
+        <exhibit></exhibit>
         <ul class="list">
             <router-link
                 class="itemrouter"
@@ -17,6 +17,7 @@
 
 <script>
 import ListItem from "./components/ListItem"
+import Exhibit from './components/Exhibit'
 // import axios from "axios"
 // import Qs from "qs"
 
@@ -29,6 +30,7 @@ export default {
     },
     components: {
         ListItem,
+        Exhibit,
     },
     beforeMount() {
         this.$store.dispatch("getArticleList").then((res) => {
@@ -51,6 +53,7 @@ export default {
 <style lang="stylus" scoped>
 .list
     padding-top 3rem
+    padding-left 0
     max-width 80rem
     margin 0 auto
     .itemrouter

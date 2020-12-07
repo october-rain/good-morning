@@ -9,15 +9,16 @@
     },
     "dependencies": {
         "core-js": "^3.6.5",
-        "echarts": "^5.0.0",
         "fastclick": "^1.0.6",
         "github-markdown-css": "^4.0.0",
         "highlight.js": "^10.4.0",
         "marked": "^1.2.5",
+        "parallax-js": "^3.1.0",
         "qs": "^6.9.4",
         "stylus": "^0.54.8",
         "stylus-loader": "^3.0.2",
         "vue": "^2.6.12",
+        "vue-parallax-js": "^0.2.3",
         "vue-simplemde": "^1.1.2"
     },
     "devDependencies": {
