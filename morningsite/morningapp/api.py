@@ -153,7 +153,6 @@ def add_article(request):
     title = request.POST['title']
     describe = request.POST['describe']
     cover = request.POST['cover']
-    url = solve_img.creat_img(cover,title)
     content = request.POST['content']
     rep_title = Article.objects.filter(title=title)
     if rep_title:
@@ -162,10 +161,12 @@ def add_article(request):
     new_article = Article(title=title)
     new_article.content = content
     new_article.describe = describe
-    if len(url) > 0:
-        new_article.cover = url
     new_article.birth = datetime.date.today()
     new_article.belong = user
+    new_article.save()
+    url = solve_img.creat_img(cover,new_article.article_id)
+    if len(url) > 0:
+        new_article.cover = url
     new_article.save()
     # 链接标签
     # 去json化 ，获取列表
@@ -191,6 +192,9 @@ def del_article(request):
             article = article[0]
             this_username = article.belong.username
             if username == this_username:
+                cover  = article.cover
+                path = cover.replace('https://api.tian999.top/','')
+                os.remove(path)
                 article.delete()
                 return Response('ok')
             else:

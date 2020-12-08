@@ -5,18 +5,19 @@ import requests
 from PIL import Image
 from io import BytesIO
 import io
+import datetime
 
 tinify.key = "4WP5qvWSKm7wl4rj2TvCNtGs7vHHqd2L"
 url = "https://api.tian999.top/"
 dir_path = 'upload/'
 
-def creat_img(src,article_name):
+def creat_img(src,article_id):
     if 'http://' in src or 'https://' in src:
         # 请求远程图片
         image = requests.get(src)
         # 转化为二进制
         image_data = Image.open(BytesIO(image.content))
-        path = dir_path + article_name + '.png'
+        path = dir_path + str(article_id) + '-' + str(datetime.datetime.now().strftime('%Y%m%d%H%M%S')) + '.png'
         image_data.save(path)
         with open(path,'rb') as f:
             size = len(f.read())
