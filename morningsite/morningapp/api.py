@@ -139,6 +139,7 @@ def get_message(request):
 # 发布文章
 @api_view(['POST'])
 def add_article(request):
+    # print(cover)
     token = request.POST['token']
     try:
         username = decode_token(token)
@@ -151,8 +152,7 @@ def add_article(request):
         print(e)
         return Response('error')
     title = request.POST['title']
-    describe = request.POST['describe']
-    cover = request.POST['cover']
+    describe = request.POST['desc']
     content = request.POST['content']
     rep_title = Article.objects.filter(title=title)
     if rep_title:
@@ -161,10 +161,16 @@ def add_article(request):
     new_article = Article(title=title)
     new_article.content = content
     new_article.describe = describe
-    new_article.birth = datetime.date.today()
     new_article.belong = user
     new_article.save()
-    url = solve_img.creat_img(cover,new_article.article_id)
+    try:
+        cover = request.POST['cover']
+    except Exception as e:
+        cover = request.FILES.get('cover')
+    if cover != None:
+        url = solve_img.creat_img(cover,new_article.article_id)
+    else :
+        url = ''
     if len(url) > 0:
         new_article.cover = url
     new_article.save()
