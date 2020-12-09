@@ -23,7 +23,7 @@ def compress_img(path):
         pass  
 
 def creat_img(src,article_id):
-    print(type(src))
+    # print(type(src))
     if isinstance(src,str):
         # 请求远程图片
         image = requests.get(src)
