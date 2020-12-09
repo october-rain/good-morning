@@ -136,6 +136,29 @@ def get_message(request):
         
     }
     return Response(data)
+@api_view(['POST'])
+def get_userarticle(request):
+    token = request.POST['token']
+    username = decode_token(token)
+    try:
+        user = User.objects.get(username=username)
+        article_list = Article.objects.filter(belong = user)
+    except Exception as e:
+        print(e)
+        return Response(error)
+    article_data = []
+    for article in article_list:
+        Ttime = article.createtime
+        this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
+        data = {
+            'id': article.article_id,
+            'title': article.title,
+            'cover': article.cover,
+            'time': this_time,
+            'desc': article.describe,
+        }
+        article_data.append(data)
+    return Response(article_data)
 # 发布文章
 @api_view(['POST'])
 def add_article(request):
@@ -219,14 +242,23 @@ def get_article(request):
     try:
         article_id = int(article_id)
         article = Article.objects.filter(article_id=article_id)
+        Ttime = article[0].createtime
+        this_time = Ttime.strftime('%Y-%m-%d %H:%M:%S')
         if article:
             data = {
-                'content': article[0].content
+                'content': article[0].content,
+                'id': article[0].article_id,
+                'title': article[0].title,
+                'cover': article[0].cover,
+                'time': this_time,
+                'desc': article[0].describe,
+                'author': article[0].belong.username,
             }
             return Response(data)
         else:
             return Response('no article')
     except Exception as e:
+        print(e)
         return Response('error')
 # 获取文章列表
 
