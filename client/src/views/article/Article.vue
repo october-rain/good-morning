@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.mainbody
-    max-width 60rem
-    margin 0 auto
+// .mainbody
+//     max-width 60rem
+//     margin 0 auto
 
 </style>
