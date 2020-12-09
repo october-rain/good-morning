@@ -185,7 +185,7 @@ def add_article(request):
     new_article.content = content
     new_article.describe = describe
     new_article.belong = user
-    # new_article.save()
+    new_article.save()
     try:
         cover = request.POST['cover']
     except Exception as e:
@@ -194,7 +194,6 @@ def add_article(request):
         url = solve_img.creat_img(cover,new_article.article_id)
     else :
         url = ''
-    return Response('ok')
     if len(url) > 0:
         new_article.cover = url
     new_article.save()
