@@ -14,9 +14,9 @@ export default new Vuex.Store({
         isUserLogin(state) {
             return state.userInfo.token
         },
-        getUserInfo(state){
+        getUserInfo(state) {
             return state.userInfo
-        }
+        },
     },
     actions: {
         // {commit} 这是利用上下文的语法，使用commit函数方法
@@ -56,7 +56,7 @@ export default new Vuex.Store({
                 commit("changeLoginUserInfo", res.data)
                 // 缓存
                 localStorage.setItem("token", res.data.token)
-                console.log("res.data.token",res.data.token)
+                console.log("res.data.token", res.data.token)
                 // console.log("res",res);
                 alert("注册成功!")
             })
@@ -77,7 +77,7 @@ export default new Vuex.Store({
                     // console.log("自动登陆返回信息", res)
                     if (res.data == "error") {
                         // alert("用户登陆过期，请重新登陆")
-                        console.log("用户登陆过期，请重新登陆");
+                        console.log("用户登陆过期，请重新登陆")
                         return
                     }
                     // console.log("res",res)
@@ -100,6 +100,30 @@ export default new Vuex.Store({
                 }
                 console.log("获取 article list 成功", res.data)
             })
+            // console.log("success", success)
+            return success
+        },
+        async getPersonalArticleList({ commit }) {
+            let success = false
+            let token = localStorage.getItem("token")
+            // console.log("token", token)
+            if (token) {
+                await axios({
+                    url: "https://api.tian999.top/api/get-userarticle/",
+                    method: "POST",
+                    // data: Qs.stringify(token),
+                    data: Qs.stringify({ token }),
+                    // params: {token: token}
+                }).then((res) => {
+                    let articleList = res.data
+                    commit("setArticleListInfo", articleList)
+                    if (res.data.length > 0) {
+                        success = true
+                        // console.log("success", success)
+                    }
+                    console.log("获取 personal article list 成功", res.data)
+                })
+            }
             // console.log("success", success)
             return success
         },

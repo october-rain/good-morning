@@ -51,7 +51,7 @@ export default {
                 this.article = res.data
                 this.content = res.data.content
                 this.markdownRender()
-                console.log("this.content", this.content)
+                // console.log("this.content", this.content)
                 console.log("获取 article 成功", res)
             })
         },
@@ -67,7 +67,7 @@ export default {
                 smartypants: false,
                 xhtml: false,
             })
-            console.log("this.content", this.content)
+            // console.log("this.content", this.content)
             this.content = marked(this.content)
             // console.log(this.content);
         },

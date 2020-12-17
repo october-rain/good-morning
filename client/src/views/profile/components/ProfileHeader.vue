@@ -3,7 +3,7 @@
         <div class="logo" @click="triggerPage('/')">十雨札记</div>
         <nav class="nav">
             <span class="mood">心情</span>
-            <span class="article">文章</span>
+            <span class="article" @click="triggerPage('personal-article')">文章</span>
             <span class="data">数据</span>
         </nav>
         <div class="profile">
