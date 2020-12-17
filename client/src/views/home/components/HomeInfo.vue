@@ -112,7 +112,7 @@ export default {
                 display: flex;
                 opacity: 0;
                 .letter
-                    transform-origin: center center 25px;
+                    transform-origin: center center 2.5rem;
                 .out
                     transform: rotateX(90deg);
                     transition: 0.32s cubic-bezier(0.6, 0, 0.7, 0.2);
