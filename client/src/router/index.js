@@ -46,6 +46,15 @@ const routes = [
             ),
     },
     {
+        path: "/personal-article",
+        name: "PersonalArticleList",
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import(
+                /* webpackChunkName: "about" */ "../views/personalArticle/PersonalArticleList.vue"
+            ),
+    },
+    {
         path: "/article/:id",
         name: "Article",
         // which is lazy-loaded when the route is visited.

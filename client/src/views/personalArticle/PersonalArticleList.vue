@@ -1,6 +1,6 @@
 <template>
-    <div class="all-body">
-        <exhibit></exhibit>
+    <div class="personal-body">
+        <!-- <exhibit></exhibit> -->
         <ul class="list">
             <router-link
                 class="itemrouter"
@@ -17,7 +17,6 @@
 
 <script>
 import ListItem from "./components/ListItem"
-import Exhibit from './components/Exhibit'
 // import axios from "axios"
 // import Qs from "qs"
 
@@ -30,14 +29,13 @@ export default {
     },
     components: {
         ListItem,
-        Exhibit,
     },
     beforeMount() {
-        this.$store.dispatch("getArticleList").then((res) => {
+        this.$store.dispatch("getPersonalArticleList").then((res) => {
             if (res) {
-                // console.log(res);
+                console.log(res);
                 this.articleList = this.$store.state.articleList
-                // console.log("this.articleList", this.articleList);
+                console.log("this.articleList", this.articleList);
             }
         })
     },
@@ -51,7 +49,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.all-body
+.personal-body
     // background-color #444
     .list
         background-color #fff
