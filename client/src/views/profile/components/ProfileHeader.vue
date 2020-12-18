@@ -3,7 +3,9 @@
         <div class="logo" @click="triggerPage('/')">十雨札记</div>
         <nav class="nav">
             <span class="mood">心情</span>
-            <span class="article" @click="triggerPage('personal-article')">文章</span>
+            <span class="article" @click="triggerPage('personal-article')"
+                >文章</span
+            >
             <span class="data">数据</span>
         </nav>
         <div class="profile">
@@ -110,4 +112,22 @@ export default {
                 margin 1rem
                 padding-left .2rem
                 cursor pointer
+
+@media (min-width: 240px){
+    .dropdown {
+        position: absolute;
+        background red
+        //     top 4.5rem
+        //     right 0
+        width: 20rem;
+        // height 11.5rem
+        // text-align center
+        // line-height 1.5
+        // font-size 1.6rem
+        // letter-spacing .3rem
+        // background #e7e9ec
+        // border-radius .5rem
+    }
+
+}
 </style>

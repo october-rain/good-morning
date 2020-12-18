@@ -102,7 +102,7 @@ export default {
             z-index -1
         .title
             margin 0 auto
-            font-size 3rem
+            font-size 5rem
             color #eee
             z-index 2
     .wrapper
@@ -121,6 +121,7 @@ export default {
             // background red
             // border .1rem solid #000
             border-radius 2rem
+            font-size 1.6rem
             box-shadow:
                 0 -12.5px 10px rgba(0, 0, 0, 0.06),
                 0 -6.7px 5.3px rgba(0, 0, 0, 0.048),
@@ -150,5 +151,5 @@ export default {
                     font-size 1.2rem
             .content
                 max-width 65rem
-                margin 0 auto
+                margin 0 5rem
 </style>

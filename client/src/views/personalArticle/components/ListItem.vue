@@ -115,23 +115,4 @@ export default {
 .list-item:hover .dele {
     display block
 }
-        // float left
-        // padding 2rem
-        // .title
-        //     font-size 1.6rem
-        //     font-weight bold
-        //     margin 1rem 0 2rem 0
-        // .desc
-        //     font-size 1.4rem
-        // .info
-        //     // position absolute
-        //     // top 12rem
-        //     // right 4rem
-        //     padding-top 14rem
-        //     padding-left 18rem
-        //     font-size 1.2rem
-        //     text-align end
-        //     .time
-        //         font-size 1rem
-        //         margin-bottom .4rem
 </style>
