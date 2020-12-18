@@ -2,8 +2,11 @@
     <div class="list-item">
         <div class="cover"><img :src="articleInfo.cover" /></div>
         <div class="article">
-            <div class="title">{{ articleInfo.title }}</div>
-            <div class="desc">{{ articleInfo.desc }}</div>
+            <div class="content">
+                <div class="title">{{ articleInfo.title }}</div>
+                <div class="desc">{{ articleInfo.desc }}</div>
+            </div>
+
             <div class="info">
                 <div class="time">{{ articleInfo.time }}</div>
                 <div class="author">{{ articleInfo.author }}</div>
@@ -36,6 +39,7 @@ export default {
     overflow auto
     cursor pointer
     color #eee
+    height 28rem
     .cover
         height 28rem
         // min-height 28rem 具体还得后期再调
@@ -48,24 +52,20 @@ export default {
             vertical-align middle  // 解决基线问题（底部多出2像素）
             // margin-top -50%
     .article
-        float left
+        position relative
+        display flex
+        flex-direction column
+        justify-content space-between
+        align-items flex-start
         padding 2rem
-        .title
-            font-size 1.6rem
-            font-weight bold
-            margin 1rem 0 2rem 0
-        .desc
-            font-size 1.4rem
+        height 100%
+        .content
+            .title
+                font-size 1.8rem
+                margin 1rem 0 2rem 0
+            .desc
+                font-size 1.4rem
+                // text-indent 1.6rem
         .info
-            // position absolute
-            // top 12rem
-            // right 4rem
-            padding-top 14rem
-            padding-left 18rem
-            font-size 1.2rem
-            text-align end
-            .time 
-                font-size 1rem
-                margin-bottom .4rem
-
+            align-self flex-end
 </style>

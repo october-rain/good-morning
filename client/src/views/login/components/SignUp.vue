@@ -123,7 +123,7 @@ export default {
                 color #4b4b4b
                 text-indent 6rem
                 &:focus
-                    text-indent 10px
+                    text-indent 1rem
                 &:focus~label
                     transform translateY(-3.5rem)
                     font-size 1.4rem

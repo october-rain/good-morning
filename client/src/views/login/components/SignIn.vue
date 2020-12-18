@@ -107,7 +107,7 @@ export default {
         text-indent: 6rem;
 
         &:focus {
-          text-indent: 10px;
+          text-indent: 1rem;
         }
 
         &:focus~label {

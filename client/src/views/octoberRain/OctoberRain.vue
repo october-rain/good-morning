@@ -68,5 +68,5 @@ export default {
         p
             color #3b4348
             text-indent: 1.8em;
-            line-height 1.8rem
+            // line-height 1.8rem
 </style>

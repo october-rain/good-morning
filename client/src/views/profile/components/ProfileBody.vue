@@ -62,5 +62,5 @@ export default {
 <style lang="stylus" scoped>
 .chart 
     max-width 50%
-    height 300px
+    height 30rem
 </style>
